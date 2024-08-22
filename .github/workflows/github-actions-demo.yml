@@ -44,3 +44,4 @@ jobs:
         run: |
           npm install -g gh-pages
           npm run deploy
+        working-directory: ./vite-project
