@@ -26,19 +26,16 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm install
-        working-directory: ../slack_clone
 
       # Build the app (Vite automatically uses .env)
       - name: Build the app
         run: npm run build
-        working-directory: ../slack_clone
 
       # Set up Git user
       - name: Configure Git
         run: |
           git config --global user.email "eddivaughan@gmail.com"
           git config --global user.name "Edward Vaughan"
-        working-directory: ../slack_clone
 
       # Deploy to Heroku
       - name: Deploy to Heroku
@@ -51,4 +48,4 @@ jobs:
           git add .
           git commit -m "Deploying to Heroku"
           git push -f heroku main
-        working-directory: ./vite-project
+        working-directory: ./slack_clone
