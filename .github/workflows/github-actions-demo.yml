@@ -46,6 +46,7 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           git init
+          git branch -m main 
           git remote add heroku https://git.heroku.com/your-heroku-app-name.git
           git add .
           git commit -m "Deploying to Heroku"
