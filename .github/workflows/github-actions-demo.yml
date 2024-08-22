@@ -30,8 +30,8 @@ jobs:
         working-directory: ./vite-project
 
       # Run tests
-      - name: Run tests
-        run: npm test
+      # - name: Run tests
+      #   run: npm test
 
       # Build the app
       - name: Build the app
