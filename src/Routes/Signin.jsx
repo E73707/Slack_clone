@@ -30,6 +30,7 @@ export default function Signup() {
   return (
     <div>
       <h1>This is the sign-In page</h1>
+      <h2>TEST</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}{" "}
       {/* Display error message */}
       <form onSubmit={handleSignin}>
