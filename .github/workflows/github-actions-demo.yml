@@ -36,6 +36,7 @@ jobs:
       # Build the app
       - name: Build the app
         run: npm run build
+        working-directory: ./vite-project
 
       # Deploy to a service (optional)
       # Example: Deploy to GitHub Pages (for static sites)
