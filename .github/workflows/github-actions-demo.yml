@@ -48,7 +48,7 @@ jobs:
           git init
           git branch -m main 
           heroku git:remote -a slack-clone1
-          git add .
+          git add -f ./vite-project/*
           git commit -m "Deploying to Heroku"
           git push -f heroku main
         working-directory: ./vite-project
