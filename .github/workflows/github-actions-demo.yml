@@ -13,28 +13,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "18"
 
+      # Install dependencies
       - name: Install dependencies
         run: npm install
         working-directory: ./vite-project
 
+      # Build the app (Vite automatically uses .env)
       - name: Build the app
         run: npm run build
         working-directory: ./vite-project
 
+      # Set up Git user
+      - name: Configure Git
+        run: |
+          git config --global user.email "eddivaughan@gmail.com"
+          git config --global user.name "Edward Vaughan"
+        working-directory: ./vite-project
+
+      # Deploy to Heroku
       - name: Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           git init
-          git branch -m main
+          git branch -m main 
           git remote add heroku https://git.heroku.com/slack-clone1.git
           git add .
           git commit -m "Deploying to Heroku"
