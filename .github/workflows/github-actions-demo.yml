@@ -48,4 +48,3 @@ jobs:
           git add .
           git commit -m "Deploying to Heroku"
           git push -f heroku main
-        working-directory: ./slack_clone
