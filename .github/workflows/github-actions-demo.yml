@@ -1,6 +1,5 @@
 name: CI/CD Pipeline
 
-# Trigger the workflow on push or pull request to the main branch
 on:
   push:
     branches:
@@ -29,21 +28,25 @@ jobs:
         run: npm install
         working-directory: ./vite-project
 
-      # Run tests
-      # - name: Run tests
-      #   run: npm test
-
-      # Build the app
+      # Build the app (Vite automatically uses .env)
       - name: Build the app
         run: npm run build
         working-directory: ./vite-project
 
+      # Set up Git user
+      - name: Configure Git
+        run: |
+          git config --global user.email "eddivaughan@gmail.com"
+          git config --global user.name "Edward Vaughan"
+        working-directory: ./vite-project
+
+      # Deploy to Heroku
       - name: Deploy to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           git init
-          git remote add heroku https://git.heroku.com/https://slack-clone1.git
+          git remote add heroku https://git.heroku.com/your-heroku-app-name.git
           git add .
           git commit -m "Deploying to Heroku"
           git push -f heroku main
