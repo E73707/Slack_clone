@@ -31,20 +31,10 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      # Set up Git user
-      - name: Configure Git
-        run: |
-          git config --global user.email "eddivaughan@gmail.com"
-          git config --global user.name "Edward Vaughan"
-
-      # Deploy to Heroku
+      # Deploy to Heroku using the Heroku Deploy Action
       - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          git init
-          git branch -m main 
-          git remote add heroku https://git.heroku.com/slack-clone1.git
-          git add .
-          git commit -m "Deploying to Heroku"
-          git push -f heroku main
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "slack-clone1" # Your Heroku app name
+          heroku_email: "eddivaughan@gmail.com"
