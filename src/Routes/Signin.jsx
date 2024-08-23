@@ -83,7 +83,7 @@ export default function Signin() {
       </form>
       <h4 className="signin-h3">Or</h4>
       <button className="signin-google-button" onClick={handleGoogleSignin}>
-        <img className="google-logo" src={googleLogo}></img>
+        <img className="google-logo" src={googleLogo} alt="google logo"></img>
         <span>Sign in with Google</span>
       </button>
     </div>
