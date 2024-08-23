@@ -1,4 +1,6 @@
 import { signOut, getAuth } from "firebase/auth";
+import Navbar from "../components/Navbar";
+import "../css/Home.css";
 
 export default function Home() {
   const auth = getAuth();
@@ -12,7 +14,9 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="home-wrapper">
+      <Navbar />
+      <div className="sidebar-wrapper"></div>
       <h1>This is the Home page</h1>
       <button onClick={() => handleSignout()}>Sign out</button>
     </div>
