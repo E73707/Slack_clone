@@ -52,40 +52,42 @@ export default function Signin() {
   }
 
   return (
-    <div className="signup-container">
-      <img className="synk-logo" src={logo} alt="SYNK" />
-      <h1 className="signin-h1">
-        First things first, enter your email address
-      </h1>
-      <h2 className="signin-h2">we recommend using your work email</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-      {/* Display error message */}
-      <form className="signin-form" onSubmit={handleSignin}>
-        <input
-          className="signin-input"
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          placeholder="Email"
-          value={email} // Controlled component
-          required
-        />
-        <input
-          className="signin-input"
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="Password"
-          value={password} // Controlled component
-          required
-        />
-        <button className="signin-button" type="submit">
-          Sign In
+    <div className="signup-wrapper">
+      <div className="signup-container">
+        <img className="synk-logo" src={logo} alt="SYNK" />
+        <h1 className="signin-h1">
+          First things first, enter your email address
+        </h1>
+        <h2 className="signin-h2">we recommend using your work email</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+        {/* Display error message */}
+        <form className="signin-form" onSubmit={handleSignin}>
+          <input
+            className="signin-input"
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Email"
+            value={email} // Controlled component
+            required
+          />
+          <input
+            className="signin-input"
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+            value={password} // Controlled component
+            required
+          />
+          <button className="signin-button" type="submit">
+            Sign In
+          </button>
+        </form>
+        <h4 className="signin-h3">Or</h4>
+        <button className="signin-google-button" onClick={handleGoogleSignin}>
+          <img className="google-logo" src={googleLogo} alt="google logo"></img>
+          <span>Sign in with Google</span>
         </button>
-      </form>
-      <h4 className="signin-h3">Or</h4>
-      <button className="signin-google-button" onClick={handleGoogleSignin}>
-        <img className="google-logo" src={googleLogo} alt="google logo"></img>
-        <span>Sign in with Google</span>
-      </button>
+      </div>
     </div>
   );
 }
