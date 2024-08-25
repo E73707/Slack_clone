@@ -1,0 +1,16 @@
+.main-container-2 {
+  top: -43px;
+  margin: 10px;
+  margin-top: 43px;
+  border-radius: 8px;
+  background-color: white;
+  width: 100%;
+  grid-template-columns: 267px auto;
+  display: grid;
+}
+
+.main-container-2-left-wrapper {
+  background-color: #ee6e51;
+  color: white;
+  border-radius: 8px 0 0 8px;
+}

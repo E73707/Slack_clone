@@ -1,9 +1,12 @@
 .header {
+  position: fixed;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #e94823;
-  padding: 0.2rem;
+  padding: 0.4rem;
+  z-index: 100;
 }
 
 .navbar-left {
