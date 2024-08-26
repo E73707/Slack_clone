@@ -4,13 +4,29 @@
   margin-top: 43px;
   border-radius: 8px;
   background-color: white;
-  width: 100%;
-  grid-template-columns: 267px auto;
-  display: grid;
+  display: flex;
 }
 
 .main-container-2-left-wrapper {
   background-color: #ee6e51;
   color: white;
+  border-radius: 8px 0 0 8px;
+}
+
+.main-container-2-right-wrapper {
+}
+
+.resize-handle {
+  width: 3px; /* Width of the handle */
+  /* background-color: #ccc; */
+  cursor: col-resize; /* Changes cursor when hovering over the handle */
+}
+
+.resize-handle:hover {
+  background-color: #888; /* Changes color on hover for better visibility */
+}
+
+.left-panel {
+  background-color: #ee6e51;
   border-radius: 8px 0 0 8px;
 }
