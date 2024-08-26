@@ -1,0 +1,82 @@
+.channels-title-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.channels-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 0;
+}
+.expand-icon {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.3s;
+}
+
+.channels-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  padding: 0.3rem;
+}
+
+.channels-icon-wrapper:hover {
+  cursor: pointer;
+  background-color: #e76446;
+}
+
+.channels-title-container {
+  padding: 0.3rem;
+  border-radius: 5px;
+}
+
+.rotated {
+  transform: rotate(-90deg);
+}
+.channels-title-container:hover {
+  cursor: pointer;
+  background-color: #e76446;
+}
+
+.channel-list {
+  padding: 5px;
+}
+
+.channel {
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.channel-name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.channel-icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 5px;
+}
+.channel-name {
+  font-size: 0.9rem;
+  margin: 0.4rem;
+}
+
+.channel:hover {
+  cursor: pointer;
+  background-color: #e76446;
+}
