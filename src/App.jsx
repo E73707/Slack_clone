@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./Routes/Home.jsx";
 import Signin from "./Routes/Signin.jsx";
-import { Signup } from "./Routes/Signup.jsx";
+import Signup from "./Routes/Signup.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthContext } from "./Context/AuthContext.jsx";

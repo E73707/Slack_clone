@@ -1,0 +1,54 @@
+import express from "express";
+import User from "../../models/User.js";
+
+const router = express.Router();
+
+// Route to create a new user
+router.post("/", async (req, res) => {
+  // The path is relative to the base path in index.js
+  const { uid, email, displayName } = req.body;
+  try {
+    const newUser = await User.create({
+      uid,
+      email,
+      displayName,
+    });
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Failed to create user" });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error getting users:", error);
+    res.status(500).json({ error: "Failed to get users" });
+  }
+});
+
+router.post("/seed", async (req, res) => {
+  try {
+    const users = await User.bulkCreate([
+      {
+        uid: "123",
+        email: "test1@mail.com",
+        displayName: "test1",
+      },
+      {
+        uid: "456",
+        email: "test2@mail.com",
+        displayName: "test2",
+      },
+    ]);
+    res.send("Database seeded successfully");
+  } catch (error) {
+    console.error("Error seeding database:", error);
+    res.status(500).json({ error: "Failed to seed database" });
+  }
+});
+
+export default router;

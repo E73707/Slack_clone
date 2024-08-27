@@ -4,10 +4,20 @@ import dmsIcon from "../images/DMs-logo.png";
 import activityIcon from "../images/activity-icon.png";
 import moreIcon from "../images/more-icon.png";
 import plusIcon from "../images/plus-icon.png";
+import { signOut } from "firebase/auth";
 
 import "../css/Sidebar.css";
 
 export default function Sidebar() {
+  async function handleSignout() {
+    try {
+      await signOut(auth);
+      console.log("User signed out successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="sidebar">
       <div className="sidebar-top">
@@ -53,10 +63,12 @@ export default function Sidebar() {
         </div>
 
         <div className="sidebar-menu sidebar-menu-logout">
-          <div className="sidebar-menu-icon-wrapper">
+          <div onClick={handleSignout} className="sidebar-menu-icon-wrapper">
             <img></img>
           </div>
-          <p className="sidebar-menu-icon-text">Logout</p>
+          <p className="sidebar-menu-icon-text sidebar-menu-icon-text">
+            Logout
+          </p>
         </div>
       </div>
     </div>

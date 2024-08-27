@@ -6,14 +6,6 @@ import MainContainer from "../components/MainContainer";
 
 export default function Home() {
   const auth = getAuth();
-  async function handleSignout() {
-    try {
-      await signOut(auth);
-      console.log("User signed out successfully");
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
     <div className="home-wrapper">
