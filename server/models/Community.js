@@ -1,5 +1,4 @@
 import { Model, DataTypes } from "sequelize";
-
 import sequelize from "../config/connection.js";
 
 class Community extends Model {}
@@ -22,7 +21,11 @@ Community.init(
     },
     community_image: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+    },
+    community_owner: {
+      type: DataTypes.STRING,
+      allowNull: false, // Stores the UID of the user who owns this community
     },
   },
   {

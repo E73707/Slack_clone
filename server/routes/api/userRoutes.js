@@ -30,6 +30,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:uid", async (req, res) => {
+  const { uid } = req.params;
+  try {
+    const user = await User.findOne({ where: { uid } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("Error getting user:", error);
+    res.status(500).json({ error: "Failed to get user" });
+  }
+});
+
 router.post("/seed", async (req, res) => {
   try {
     const users = await User.bulkCreate([

@@ -2,6 +2,8 @@ import "./App.css";
 import Home from "./Routes/Home.jsx";
 import Signin from "./Routes/Signin.jsx";
 import Signup from "./Routes/Signup.jsx";
+import CommunitySignup from "./Routes/CommunitySignup.jsx";
+import CommunitySignin from "./Routes/CommunitySignin.jsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthContext } from "./Context/AuthContext.jsx";
@@ -22,6 +24,22 @@ function App() {
       element: (
         <Protected>
           <Home />
+        </Protected>
+      ),
+    },
+    {
+      path: "/community-signup",
+      element: (
+        <Protected>
+          <CommunitySignup />
+        </Protected>
+      ),
+    },
+    {
+      path: "/community-signin",
+      element: (
+        <Protected>
+          <CommunitySignin />
         </Protected>
       ),
     },
