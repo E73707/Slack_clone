@@ -2,7 +2,9 @@ use synkDB
 
 DROP DATABASE IF EXISTS synkDB;
 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS projects;
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `Users`, `Communities`, `CommunityMembers`, `CommunityChannels`, `CommunityPosts`;
+SET FOREIGN_KEY_CHECKS = 1;
+
 
 CREATE DATABASE synkDB;

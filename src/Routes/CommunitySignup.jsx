@@ -1,14 +1,27 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 
 export default function CommunitySignup() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const reduxUser = useSelector((state) => state.user.user);
+
+  console.log("Redux User:", reduxUser);
+
+  console.log("User:", user);
+
   const [communityData, setCommunityData] = useState({
     community_name: "",
     community_description: "",
     community_image: "",
   });
+  const navigate = useNavigate();
 
-  const user = useSelector((state) => state.user.user);
+  function handleChoiceRoute() {
+    navigate("/community-choice");
+  }
 
   useEffect(() => {
     console.log("Community data updated:", communityData);
@@ -52,6 +65,7 @@ export default function CommunitySignup() {
       }
       const newCommunity = await response.json();
       console.log("New community:", newCommunity);
+      navigate("/community-choice");
     } catch (error) {
       console.error("Error creating community:", error);
     }

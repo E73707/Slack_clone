@@ -1,54 +1,33 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
-import { setUser } from "../../features/userSlice"; // Assuming you have a userSlice set up
-import Navbar from "../components/Navbar"; // Replace with your actual component imports
+import { setUser } from "../../features/userSlice";
+import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import MainContainer from "../components/MainContainer";
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import "../css/Home.css";
 
 export default function Home() {
   const [hasCommunity, setHasCommunity] = useState(false);
   const dispatch = useDispatch();
   const auth = getAuth();
-  const user = auth.currentUser;
   const navigate = useNavigate();
+  const reduxUser = useSelector((state) => state.user.user);
 
   useEffect(() => {
+    const user = auth.currentUser;
     if (user) {
       console.log("User:", user.uid);
-      getAllUsers();
-      getCurrentUser();
+      getCurrentUser(user.uid);
     }
-  }, [user]);
+    console.log("Redux User:", reduxUser);
+  }, [auth]);
 
-  function handleCreateRoute() {
-    navigate("/community-signup");
-  }
-
-  function handleJoinRoute() {
-    navigate("/community-signin");
-  }
-
-  async function getAllUsers() {
+  async function getCurrentUser(uid) {
     try {
-      const response = await fetch("http://localhost:3001/api/users");
-      if (!response.ok) {
-        throw new Error("Failed to get users");
-      }
-      const data = await response.json();
-      console.log("All users:", data);
-    } catch (error) {
-      console.error("Error getting users:", error);
-    }
-  }
-
-  async function getCurrentUser() {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/api/users/${user.uid}`
-      );
+      const response = await fetch(`http://localhost:3001/api/users/${uid}`);
       if (!response.ok) {
         throw new Error("Failed to get user");
       }
@@ -56,14 +35,27 @@ export default function Home() {
 
       if (data) {
         dispatch(setUser(data));
+        console.log("Current user:", data);
       }
 
-      if (data.communities && data.communities.length > 0) {
+      // Check if the user is part of any community
+      if (
+        (data.memberOf && data.memberOf.length > 0) ||
+        (data.ownedCommunities && data.ownedCommunities.length > 0)
+      ) {
         setHasCommunity(true);
       }
     } catch (error) {
       console.error("Error getting user:", error);
     }
+  }
+
+  function handleCreateRoute() {
+    navigate("/community-signup");
+  }
+
+  function handleJoinRoute() {
+    navigate("/community-signin");
   }
 
   return (

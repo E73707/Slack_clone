@@ -1,12 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 export default function RightMainContainer() {
+  const user = useSelector((state) => state.user.user);
+
   async function getAllUsers() {
     try {
       const response = await fetch("http://localhost:3001/api/users");
       if (!response.ok) {
         throw new Error("Failed to get users");
       }
+      console.log(user);
       const data = await response.json();
       console.log("Users:", data);
     } catch (error) {

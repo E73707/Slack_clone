@@ -8,11 +8,24 @@ import CommunityPost from "./CommunityPost.js";
 // Associations
 
 // Many-to-Many relationship between Users and Communities through CommunityMember
-User.belongsToMany(Community, { through: CommunityMember });
-Community.belongsToMany(User, { through: CommunityMember });
-
+User.belongsToMany(Community, {
+  through: CommunityMember,
+  as: "memberOf", // Alias for communities the user is a member of
+});
+Community.belongsToMany(User, {
+  through: CommunityMember,
+  as: "members", // Alias for users who are members of a community
+});
 // A Community has one owner (a User)
-Community.belongsTo(User, { as: "owner", foreignKey: "community_owner" });
+Community.belongsTo(User, {
+  as: "owner", // Alias for the owner of the community
+  foreignKey: "community_owner",
+});
+
+User.hasMany(Community, {
+  as: "ownedCommunities", // Alias for communities the user owns
+  foreignKey: "community_owner",
+});
 
 // One-to-Many relationship between Community and CommunityChannel
 Community.hasMany(CommunityChannel, { foreignKey: "communityId" });
@@ -31,8 +44,13 @@ CommunityChannel.hasMany(CommunityPost, { foreignKey: "channelId" });
 CommunityPost.belongsTo(CommunityChannel, { foreignKey: "channelId" });
 
 // Sync all models with the database
-sequelize.sync({ force: false }).then(() => {
-  console.log("Database & tables created!");
-});
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    console.log("Database synced and tables created");
+  })
+  .catch((error) => {
+    console.error("Error syncing database:", error);
+  });
 
 export { User, Community, CommunityMember, CommunityChannel, CommunityPost };
