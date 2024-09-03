@@ -5,12 +5,15 @@ import { setUser } from "../../features/userSlice"; // Assuming you have a userS
 import Navbar from "../components/Navbar"; // Replace with your actual component imports
 import Sidebar from "../components/Sidebar";
 import MainContainer from "../components/MainContainer";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [hasCommunity, setHasCommunity] = useState(false);
   const dispatch = useDispatch();
   const auth = getAuth();
   const user = auth.currentUser;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -19,6 +22,14 @@ export default function Home() {
       getCurrentUser();
     }
   }, [user]);
+
+  function handleCreateRoute() {
+    navigate("/community-signup");
+  }
+
+  function handleJoinRoute() {
+    navigate("/community-signin");
+  }
 
   async function getAllUsers() {
     try {
@@ -73,8 +84,8 @@ export default function Home() {
               You don't have any communities yet. Create a community or join one
               to get started.
             </p>
-            <button onClick={getCurrentUser}>Create Community</button>
-            <button>Join Community</button>
+            <button onClick={handleCreateRoute}>Create Community</button>
+            <button onClick={handleJoinRoute}>Join Community</button>
           </div>
         </div>
       )}
