@@ -4,42 +4,58 @@ import { setCommunity } from "../../features/communitySlice";
 
 export default function CommunityChoice() {
   const user = useSelector((state) => state.user.user);
-  const [community, setCommunity] = useState(null);
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
   const dispatch = useDispatch();
 
-  const communities = user.memberOf.concat(user.ownedCommunities);
+  // Combine both owned and member communities
+  const communities = user ? user.memberOf.concat(user.ownedCommunities) : [];
 
-  console.log("Communities:", communities);
-
-  // Log user whenever it changes to ensure it's available
+  // Log user and communities whenever they change to ensure they are available
   useEffect(() => {
     console.log("User in CommunityChoice:", user);
+    console.log("Communities:", communities);
   }, [user]);
 
-  const handleCommunity = (e) => {
-    setCommunity(e.target.value);
+  const handleCommunityClick = (community) => {
+    console.log("Selected community:", community);
+    setSelectedCommunity(community);
   };
 
   const handleSubmit = () => {
-    console.log("Submitting with user:", user);
-    dispatch(setCommunity(community));
+    if (selectedCommunity) {
+      console.log("Submitting with selected community:", selectedCommunity);
+      dispatch(setCommunity(selectedCommunity));
+    } else {
+      console.log("No community selected");
+    }
   };
 
   return (
     <div>
       <h1>Community Choice</h1>
       <div className="community-list">
-        {communities.map((community) => {
-          return (
-            <div key={community._id}>
-              <div>
-                <p>{community.community_name}</p>
-              </div>
-            </div>
-          );
-        })}
+        {communities.map((community) => (
+          <div
+            key={community._id}
+            onClick={() => handleCommunityClick(community)}
+            style={{
+              padding: "10px",
+              margin: "5px",
+              border:
+                selectedCommunity && selectedCommunity._id === community._id
+                  ? "2px solid blue"
+                  : "1px solid gray",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            <p>{community.community_name}</p>
+          </div>
+        ))}
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit} disabled={!selectedCommunity}>
+        Submit
+      </button>
     </div>
   );
 }
