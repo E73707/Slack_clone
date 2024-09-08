@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const communitySlice = createSlice({
-  name: "current_community",
+  name: "community",
   initialState: {
-    community: null,
+    community: null, // Ensure this is initialized to prevent undefined errors
   },
   reducers: {
     setCommunity: (state, action) => {
@@ -16,5 +16,4 @@ const communitySlice = createSlice({
 });
 
 export const { setCommunity, clearCommunity } = communitySlice.actions;
-
 export default communitySlice.reducer;

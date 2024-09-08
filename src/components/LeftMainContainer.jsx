@@ -2,12 +2,12 @@ import "../css/LeftMainContainer.css";
 import ChannelList from "./ChannelList";
 import DirectMessagesList from "./DirectMessagesList";
 
-export default function LeftMainContainer() {
+export default function LeftMainContainer({ communityData }) {
   return (
     <div className="left-main-container">
       <div className="lmh">
         <div className="lmhl">
-          <p className="lmhcn">Community Name</p>
+          <p className="lmhcn">{communityData.community_name}</p>
           <p className="lmhc-dropdown">v</p>
         </div>
         <div className="lmhr">
@@ -17,7 +17,7 @@ export default function LeftMainContainer() {
 
       <div className="left-main-container-content">
         <div>
-          <ChannelList />
+          <ChannelList communityData={communityData} />
         </div>
         <div className="Direct-messages">
           <DirectMessagesList />

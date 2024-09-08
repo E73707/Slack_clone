@@ -8,7 +8,7 @@ import { signOut } from "firebase/auth";
 
 import "../css/Sidebar.css";
 
-export default function Sidebar() {
+export default function Sidebar({ communityData }) {
   async function handleSignout() {
     try {
       await signOut(auth);
@@ -23,7 +23,9 @@ export default function Sidebar() {
       <div className="sidebar-top">
         <div className="sidebar-menu-community-wrapper">
           <div className="sidebar-menu sidebar-menu-community">
-            <p className="sidebar-menu-community-text">E</p>
+            <p className="sidebar-menu-community-text">
+              {communityData.community_name[0].toUpperCase()}
+            </p>
           </div>
         </div>
 

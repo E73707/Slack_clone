@@ -5,10 +5,12 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import { combineReducers } from "redux";
 import { PersistGate } from "redux-persist/integration/react";
 import userReducer from "../features/userSlice"; // Replace with your actual user slice
+import communityReducer from "../features/communitySlice";
 
 // Combine all reducers
 const rootReducer = combineReducers({
   user: userReducer,
+  community: communityReducer,
   // Add more reducers here if you have them
 });
 

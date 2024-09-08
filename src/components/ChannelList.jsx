@@ -1,19 +1,25 @@
-import { useState } from "react";
 import expandIcon from "../images/expand-icon.png";
 import "../css/ChannelList.css";
 import hashtag from "../images/hashtag.png";
+import { useState, useEffect } from "react";
 
-export default function ChannelList() {
+export default function ChannelList({ communityData }) {
   const [expanded, setExpanded] = useState(true);
+  const [channelList, setChannelList] = useState([]);
 
-  const channelList = [
-    "channel1",
-    "channel2",
-    "channel3",
-    "channel4",
-    "channel5",
-    "channel6",
-  ];
+  useEffect(() => {
+    console.log("Community data:", communityData);
+    setChannelList(communityData.channels);
+  }, [communityData]);
+
+  // const channelList = [
+  //   "channel1",
+  //   "channel2",
+  //   "channel3",
+  //   "channel4",
+  //   "channel5",
+  //   "channel6",
+  // ];
 
   const handleExpand = () => {
     setExpanded(!expanded);
@@ -50,6 +56,14 @@ export default function ChannelList() {
           ))}
         </div>
       )}
+
+      <div className="channel-list">
+        <div className="channel">
+          <div className="channel-name-wrapper">
+            <p className="channel-name">Create Channel</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

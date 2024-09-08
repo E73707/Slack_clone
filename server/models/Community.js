@@ -31,6 +31,7 @@ Community.init(
   {
     sequelize,
     modelName: "community",
+    tableName: "communities",
   }
 );
 

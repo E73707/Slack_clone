@@ -28,7 +28,10 @@ User.hasMany(Community, {
 });
 
 // One-to-Many relationship between Community and CommunityChannel
-Community.hasMany(CommunityChannel, { foreignKey: "communityId" });
+Community.hasMany(CommunityChannel, {
+  foreignKey: "communityId",
+  as: "channels",
+});
 CommunityChannel.belongsTo(Community, { foreignKey: "communityId" });
 
 // One-to-Many relationship between Community and CommunityPost

@@ -11,19 +11,44 @@ import "../css/Home.css";
 
 export default function Home() {
   const [hasCommunity, setHasCommunity] = useState(false);
+  const [communityData, setCommunityData] = useState(null); // State for the community data
+  const [loading, setLoading] = useState(true); // Loading state for the community
   const dispatch = useDispatch();
   const auth = getAuth();
   const navigate = useNavigate();
   const reduxUser = useSelector((state) => state.user.user);
+  const reduxCommunity = useSelector((state) => state.community.community);
 
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
-      console.log("User:", user.uid);
       getCurrentUser(user.uid);
     }
-    console.log("Redux User:", reduxUser);
-  }, [auth]);
+    if (reduxCommunity && reduxCommunity.id) {
+      console.log("Redux Community:", reduxCommunity.id);
+      getCurrentCommunity(reduxCommunity.id);
+    }
+  }, [auth, reduxCommunity]);
+
+  async function getCurrentCommunity(communityId) {
+    setLoading(true); // Set loading to true when fetching starts
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/communities/${communityId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to get community");
+      }
+      const data = await response.json();
+      // console.log("Current community:", data);
+      setCommunityData(data);
+      console.log("Community data:", communityData);
+    } catch (error) {
+      console.error("Error getting community:", error);
+    } finally {
+      setLoading(false); // Set loading to false when fetching ends
+    }
+  }
 
   async function getCurrentUser(uid) {
     try {
@@ -60,12 +85,16 @@ export default function Home() {
 
   return (
     <>
-      {hasCommunity ? (
+      {loading ? ( // Show loading spinner or message while loading is true
+        <div className="loading">
+          <p>Loading community...</p>
+        </div>
+      ) : hasCommunity ? (
         <div className="home-wrapper">
           <Navbar />
           <div className="home-main-container">
-            <Sidebar />
-            <MainContainer />
+            <Sidebar communityData={communityData} />
+            <MainContainer communityData={communityData} />
           </div>
         </div>
       ) : (
