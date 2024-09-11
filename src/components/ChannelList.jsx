@@ -2,24 +2,22 @@ import expandIcon from "../images/expand-icon.png";
 import "../css/ChannelList.css";
 import hashtag from "../images/hashtag.png";
 import { useState, useEffect } from "react";
+import ChannelCreateModal from "./ChannelCreateModal";
 
 export default function ChannelList({ communityData }) {
   const [expanded, setExpanded] = useState(true);
   const [channelList, setChannelList] = useState([]);
+
+  const [channelModal, setChanelModal] = useState(true);
 
   useEffect(() => {
     console.log("Community data:", communityData);
     setChannelList(communityData.channels);
   }, [communityData]);
 
-  // const channelList = [
-  //   "channel1",
-  //   "channel2",
-  //   "channel3",
-  //   "channel4",
-  //   "channel5",
-  //   "channel6",
-  // ];
+  const handleChannelModal = () => {
+    setChanelModal(!channelModal);
+  };
 
   const handleExpand = () => {
     setExpanded(!expanded);
@@ -60,10 +58,19 @@ export default function ChannelList({ communityData }) {
       <div className="channel-list">
         <div className="channel">
           <div className="channel-name-wrapper">
-            <p className="channel-name">Create Channel</p>
+            <p onClick={handleChannelModal} className="channel-name">
+              Create Channel
+            </p>
           </div>
         </div>
       </div>
+
+      {channelModal && (
+        <ChannelCreateModal
+          channelModalState={channelModal}
+          setChannelModalState={setChanelModal}
+        />
+      )}
     </div>
   );
 }
