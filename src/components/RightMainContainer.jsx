@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "../css/RightMainContainer.css";
+import MessageInput from "./MessageInput";
 
 export default function RightMainContainer() {
   const user = useSelector((state) => state.user.user);
@@ -78,9 +79,8 @@ export default function RightMainContainer() {
           </p>
         </div>
 
-        {/* Input area at the bottom */}
         <div className="right-main-container-input">
-          <input type="text" placeholder="Type a message here..." />
+          <MessageInput user={user} channel={channel} />
         </div>
       </div>
     </div>
