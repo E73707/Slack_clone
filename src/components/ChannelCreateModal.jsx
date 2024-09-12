@@ -1,14 +1,79 @@
 import "../css/ChannelCreateModal.css";
 import exitIcon from "../images/exit.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setCommunity } from "../../features/communitySlice";
 
 export default function ChannelCreateModal({
   channelModalState,
   setChannelModalState,
 }) {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const [data, setCommunityData] = useState([]);
+
+  const communityData = useSelector((state) => state.community.community);
+  const [newCommunityData, setNewCommunityData] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (communityData.community_owner === user.uid) {
+      setIsAdmin(true);
+    }
+  }, [communityData, user]);
+
   const [channelData, setChannelData] = useState({
-    channel_name: null,
+    channel_name: "",
+    isAdmin: isAdmin,
+    userId: user.uid,
+    communityChannelId: communityData.id,
+    communityId: communityData.id,
+    UserUid: user.uid,
   });
+
+  // Function to create the channel
+  const createChannel = async () => {
+    console.log("Creating channel with data:", channelData);
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/channels/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(channelData), // Only send channelData, no event
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Channel created successfully:", data);
+      } else {
+        console.error("Failed to create channel");
+      }
+    } catch (error) {
+      console.error("Error creating channel: ", error);
+    }
+    getChannelData(); // Get the updated channel data
+    setChannelModalState(false); // Close the modal after creation
+  };
+
+  const getChannelData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/api/communities/${communityData.id}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to get community");
+      }
+      const data = await response.json();
+      console.log("Current community:", data);
+      dispatch(setCommunity(data));
+    } catch (error) {
+      console.error("Error getting community:", error);
+    }
+  };
 
   const [nextStep, setNextStep] = useState(false);
 
@@ -19,10 +84,6 @@ export default function ChannelCreateModal({
   // Handles updating channel name
   const handleChannelName = (e) => {
     setChannelData({ ...channelData, channel_name: e.target.value });
-  };
-
-  const createChannel = () => {
-    console.log("Creating channel:", channelData.channel_name);
   };
 
   // Closes the modal by calling the parent's state function
@@ -47,11 +108,13 @@ export default function ChannelCreateModal({
           </div>
 
           <div className="modal-body">
-            <p className="modal-body-text">Description</p>
+            <p className="modal-body-text">Name</p>
             <input
               type="text"
-              placeholder="e.g. A channel for announcements"
+              placeholder="# e.g. announcements"
               className="modal-input"
+              value={channelData.channel_name}
+              onChange={handleChannelName} // Capture the channel name
             />
             <p className="modal-body-description">
               Channels are where discussions happen around a specific topic.
@@ -74,7 +137,7 @@ export default function ChannelCreateModal({
                 src={exitIcon}
                 alt="exit"
                 className="exit-icon"
-                onClick={closeModal} // Call the parent's function to close the modal
+                onClick={closeModal}
               />
             </div>
           </div>
@@ -88,8 +151,11 @@ export default function ChannelCreateModal({
                   id="public"
                   name="visibility"
                   value="public"
+                  onChange={() =>
+                    setChannelData({ ...channelData, private: false })
+                  }
                 />
-                <label htmlFor="public">Public - anyone in community</label>
+                <label htmlFor="public">Public - anyone in the community</label>
               </div>
               <div className="modal-radio-option-wrapper">
                 <input
@@ -97,6 +163,9 @@ export default function ChannelCreateModal({
                   id="private"
                   name="visibility"
                   value="private"
+                  onChange={() =>
+                    setChannelData({ ...channelData, private: true })
+                  }
                 />
                 <label htmlFor="private">Private - only specific people</label>
               </div>
@@ -113,7 +182,6 @@ export default function ChannelCreateModal({
           </div>
         </div>
       )}
-      <div />
     </div>
   );
 }

@@ -48,6 +48,6 @@ async function seedDatabase() {
 }
 
 sequelize.sync({ force: true }).then(async () => {
-  await seedDatabase();
+  // await seedDatabase();
   app.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
 });

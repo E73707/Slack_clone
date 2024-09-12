@@ -27,6 +27,7 @@ CommunityChannel.init(
   {
     sequelize,
     modelName: "community_channel",
+    tableName: "community_channels",
   }
 );
 

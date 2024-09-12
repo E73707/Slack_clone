@@ -1,0 +1,41 @@
+/* RightMainContainer.css */
+
+.right-main-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+}
+
+.right-main-container-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.right-main-container-header {
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.right-main-container-posts {
+  flex-grow: 1;
+  overflow-y: auto; /* Make posts area scrollable */
+  padding: 1rem;
+  max-height: calc(90vh - 150px);
+}
+
+.right-main-container-input {
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.right-main-container-input input {
+  width: 90%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}

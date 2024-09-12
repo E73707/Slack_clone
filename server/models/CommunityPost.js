@@ -43,6 +43,7 @@ CommunityPost.init(
   {
     sequelize,
     modelName: "community_post",
+    tableName: "community_posts",
   }
 );
 

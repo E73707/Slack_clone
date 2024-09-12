@@ -3,15 +3,17 @@ import "../css/ChannelList.css";
 import hashtag from "../images/hashtag.png";
 import { useState, useEffect } from "react";
 import ChannelCreateModal from "./ChannelCreateModal";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setChannel } from "../../features/channelSlice"; // Import setChannel action
 
 export default function ChannelList({ communityData }) {
+  const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(true);
   const [channelList, setChannelList] = useState([]);
-
   const [channelModal, setChanelModal] = useState(true);
 
   useEffect(() => {
-    console.log("Community data:", communityData);
     setChannelList(communityData.channels);
   }, [communityData]);
 
@@ -23,6 +25,11 @@ export default function ChannelList({ communityData }) {
     setExpanded(!expanded);
   };
 
+  const handleChannelClick = (channel) => {
+    // Dispatch the setChannel action with the selected channel
+    dispatch(setChannel(channel));
+  };
+
   return (
     <div className="channels">
       <div className="channels-title-wrapper">
@@ -32,8 +39,6 @@ export default function ChannelList({ communityData }) {
             src={expandIcon}
             alt="expand"
           />
-
-          <div />
         </div>
         <div className="channels-title-container">
           <p className="channels-title">Channels</p>
@@ -43,12 +48,18 @@ export default function ChannelList({ communityData }) {
       {expanded && (
         <div className="channel-list">
           {channelList.map((channel) => (
-            <div className="channel" key={channel}>
+            <div
+              className="channel"
+              onClick={() => handleChannelClick(channel)}
+            >
               <div className="channel-icon-wrapper">
                 <img className="channel-icon" src={hashtag} alt="hashtag" />
               </div>
-              <div className="channel-name-wrapper">
-                <p className="channel-name">{channel}</p>
+              <div
+                className="channel-name-wrapper"
+                onClick={() => handleChannelClick(channel)} // Call the handler when clicked
+              >
+                <p className="channel-name">{channel.channel_name}</p>
               </div>
             </div>
           ))}

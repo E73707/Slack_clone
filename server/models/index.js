@@ -4,6 +4,7 @@ import Community from "./Community.js";
 import CommunityMember from "./CommunityMember.js";
 import CommunityChannel from "./CommunityChannel.js";
 import CommunityPost from "./CommunityPost.js";
+import ChannelMember from "./ChannelMember.js";
 
 // Associations
 
@@ -39,12 +40,28 @@ Community.hasMany(CommunityPost, { foreignKey: "communityId" });
 CommunityPost.belongsTo(Community, { foreignKey: "communityId" });
 
 // One-to-Many relationship between User and CommunityPost
+
 User.hasMany(CommunityPost, { foreignKey: "userId" });
 CommunityPost.belongsTo(User, { foreignKey: "userId" });
 
 // One-to-Many relationship between CommunityChannel and CommunityPost
 CommunityChannel.hasMany(CommunityPost, { foreignKey: "channelId" });
 CommunityPost.belongsTo(CommunityChannel, { foreignKey: "channelId" });
+
+User.belongsToMany(CommunityChannel, {
+  through: ChannelMember,
+  as: "channel_members",
+});
+
+CommunityChannel.hasMany(ChannelMember, {
+  foreignKey: "channelId",
+  as: "channel_members",
+});
+
+ChannelMember.belongsTo(CommunityChannel, {
+  foreignKey: "channelId",
+  as: "channel_members",
+});
 
 // Sync all models with the database
 sequelize
@@ -56,4 +73,11 @@ sequelize
     console.error("Error syncing database:", error);
   });
 
-export { User, Community, CommunityMember, CommunityChannel, CommunityPost };
+export {
+  User,
+  Community,
+  CommunityMember,
+  CommunityChannel,
+  CommunityPost,
+  ChannelMember,
+};

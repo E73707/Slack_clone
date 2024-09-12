@@ -11,7 +11,7 @@ import "../css/Home.css";
 
 export default function Home() {
   const [hasCommunity, setHasCommunity] = useState(false);
-  const [communityData, setCommunityData] = useState(null); // State for the community data
+  const [communityData, setCommunityData] = useState([]); // State for the community data
   const [loading, setLoading] = useState(true); // Loading state for the community
   const dispatch = useDispatch();
   const auth = getAuth();
@@ -25,7 +25,6 @@ export default function Home() {
       getCurrentUser(user.uid);
     }
     if (reduxCommunity && reduxCommunity.id) {
-      console.log("Redux Community:", reduxCommunity.id);
       getCurrentCommunity(reduxCommunity.id);
     }
   }, [auth, reduxCommunity]);
@@ -40,9 +39,7 @@ export default function Home() {
         throw new Error("Failed to get community");
       }
       const data = await response.json();
-      // console.log("Current community:", data);
-      setCommunityData(data);
-      console.log("Community data:", communityData);
+      dispatch(setCommunityData(data));
     } catch (error) {
       console.error("Error getting community:", error);
     } finally {

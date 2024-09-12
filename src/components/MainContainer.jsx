@@ -14,7 +14,7 @@ export default function MainContainer({ communityData }) {
           </div>
         </Panel>
         <PanelResizeHandle className="resize-handle" />
-        <Panel defaultSize={75} minSize={20}>
+        <Panel className="right-panel" defaultSize={75} minSize={20}>
           <div className="main-container-2-right-wrapper">
             <RightMainContainer communityData={communityData} />
           </div>

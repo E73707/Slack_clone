@@ -8,7 +8,7 @@ CommunityMember.init(
     communityId: {
       type: DataTypes.INTEGER,
       references: {
-        model: "communities",
+        model: "community",
         key: "id",
       },
       onDelete: "CASCADE", // If a community is deleted, its members are also removed
@@ -21,10 +21,16 @@ CommunityMember.init(
       },
       onDelete: "CASCADE", // If a user is deleted, their membership in communities is also removed
     },
+    role: {
+      type: DataTypes.ENUM("member", "admin"),
+      defaultValue: "member",
+    },
   },
+
   {
     sequelize,
     modelName: "community_member",
+    tableName: "community_members",
   }
 );
 
