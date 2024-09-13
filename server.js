@@ -2,8 +2,9 @@ import express from "express";
 import routes from "./server/routes/index.js";
 import cors from "cors";
 import sequelize from "./server/config/connection.js";
-import User from "./server/models/User.js";
-import Community from "./server/models/Community.js";
+
+// Dynamically import the ws module (WebSocket)
+const { WebSocketServer, WebSocket } = await import("ws");
 
 const app = express();
 
@@ -15,39 +16,65 @@ const PORT = process.env.PORT || 3001;
 
 app.use("/api", routes);
 
-async function seedDatabase() {
-  try {
-    await User.bulkCreate([
-      {
-        uid: "123",
-        email: "test1@mail.com",
-        displayName: "test1",
-      },
-      {
-        uid: "456",
-        email: "test2@mail.com",
-        displayName: "test2",
-      },
-    ]);
-    await Community.bulkCreate([
-      {
-        community_name: "Community 1",
-        community_description: "A cool community",
-        community_owner: "123", // Valid UID from User table
-      },
-      {
-        community_name: "Community 2",
-        community_description: "Another cool community",
-        community_owner: "456", // Valid UID from User table
-      },
-    ]);
-    console.log("DATABSE SEEDED SUCCESSFULLY");
-  } catch (error) {
-    console.error("Error seeding database:", error);
-  }
-}
+// Sync with the database
+sequelize.sync({ force: false }).then(async () => {
+  // Create HTTP server and wrap WebSocket around it
+  const server = app.listen(PORT, () =>
+    console.log(`Now listening on port ${PORT}`)
+  );
 
-sequelize.sync({ force: true }).then(async () => {
-  // await seedDatabase();
-  app.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
+  // Create a WebSocket server
+  const wss = new WebSocketServer({ server });
+
+  // Broadcast function to send messages to all connected clients
+  const broadcastMessage = (message) => {
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(message));
+      }
+    });
+  };
+
+  // Handle new WebSocket connections
+  wss.on("connection", (ws) => {
+    ws.on("message", (message) => {
+      try {
+        // Convert buffer to string and parse JSON
+        const parsedMessage = JSON.parse(message.toString());
+        // Process the received message and send it to all clients
+        broadcastMessage(parsedMessage);
+      } catch (error) {
+        console.error("Error parsing message:", error);
+      }
+    });
+
+    ws.on("close", () => {
+      console.log("Client disconnected");
+    });
+  });
+
+  // Assuming you're creating posts via an API call
+  app.post("/api/posts/create", async (req, res) => {
+    const { communityId, userId, channelId, content } = req.body;
+
+    try {
+      // Logic for saving the post to the database
+      const newPost = {
+        communityId,
+        userId,
+        channelId,
+        content,
+        createdAt: new Date(),
+      };
+
+      // Broadcast the new post to all connected WebSocket clients
+      broadcastMessage(newPost);
+
+      // Send a response to the client that posted the message
+      res.json({ success: true, newPost });
+    } catch (error) {
+      console.error("Error creating post:", error);
+      res.status(500).json({ error: "Failed to create post" });
+    }
+  });
 });

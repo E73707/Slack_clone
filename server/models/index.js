@@ -5,6 +5,7 @@ import CommunityMember from "./CommunityMember.js";
 import CommunityChannel from "./CommunityChannel.js";
 import CommunityPost from "./CommunityPost.js";
 import ChannelMember from "./ChannelMember.js";
+import InviteToken from "./InviteToken.js";
 
 // Associations
 
@@ -65,7 +66,7 @@ ChannelMember.belongsTo(CommunityChannel, {
 
 // Sync all models with the database
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log("Database synced and tables created");
   })
@@ -80,4 +81,5 @@ export {
   CommunityChannel,
   CommunityPost,
   ChannelMember,
+  InviteToken,
 };

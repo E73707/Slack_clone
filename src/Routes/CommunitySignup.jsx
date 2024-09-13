@@ -8,10 +8,6 @@ export default function CommunitySignup() {
   const user = auth.currentUser;
   const reduxUser = useSelector((state) => state.user.user);
 
-  console.log("Redux User:", reduxUser);
-
-  console.log("User:", user);
-
   const [communityData, setCommunityData] = useState({
     community_name: "",
     community_description: "",

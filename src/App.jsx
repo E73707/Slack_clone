@@ -8,6 +8,7 @@ import CommunityChoice from "./Routes/CommunityChoice.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthContext } from "./Context/AuthContext.jsx";
 import { Protected } from "./Routes/Protected.jsx";
+import InviteRoute from "./Routes/InviteRoute.jsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -53,6 +54,7 @@ function App() {
         </Protected>
       ),
     },
+    { path: "/invite/:token", element: <InviteRoute /> },
   ]);
 
   return (

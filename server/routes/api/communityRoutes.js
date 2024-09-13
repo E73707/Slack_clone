@@ -1,5 +1,4 @@
 import express from "express";
-
 import Community from "../../models/Community.js";
 import CommunityChannel from "../../models/CommunityChannel.js";
 const router = express.Router();

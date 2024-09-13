@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import the Quill styles
 
-export default function MessageInput() {
+export default function MessageInput({ onSendMessage }) {
   const [message, setMessage] = useState("");
 
   // Handle sending the message
   const handleSend = () => {
     if (message.trim()) {
-      console.log("Message sent:", message);
+      onSendMessage(message); // Send message to the parent component
       setMessage(""); // Clear input after sending
     }
   };
@@ -32,6 +32,8 @@ export default function MessageInput() {
         placeholder="Type a message here..."
         className="quill-editor"
       />
+      <button onClick={handleSend}>Send</button>{" "}
+      {/* You can style this button as needed */}
     </div>
   );
 }
