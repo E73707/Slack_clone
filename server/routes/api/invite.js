@@ -32,7 +32,7 @@ router.post("/generate", async (req, res) => {
     });
 
     // Construct the invite link
-    const inviteLink = `http://localhost:5173/invite/${inviteToken}`;
+    const inviteLink = `${process.env.BASE_URL}/invite/${inviteToken}`;
 
     res.json({ inviteLink });
   } catch (error) {
