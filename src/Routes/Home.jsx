@@ -33,7 +33,7 @@ export default function Home() {
     setLoading(true); // Set loading to true when fetching starts
     try {
       const response = await fetch(
-        `/api/communities/${communityId}`
+        `http://localhost:3001/api/communities/${communityId}`
       );
       if (!response.ok) {
         throw new Error("Failed to get community");
@@ -49,7 +49,7 @@ export default function Home() {
 
   async function getCurrentUser(uid) {
     try {
-      const response = await fetch(`/api/users/${uid}`);
+      const response = await fetch(`http://localhost:3001/api/users/${uid}`);
       if (!response.ok) {
         throw new Error("Failed to get user");
       }
