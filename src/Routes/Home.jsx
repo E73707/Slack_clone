@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Home.css";
 
 export default function Home() {
+   const API_URL = "https://slack-clone1-529cef6d905b.herokuapp.com" || 'http://localhost:3001'
   const [hasCommunity, setHasCommunity] = useState(false);
   const [communityData, setCommunityData] = useState([]); // State for the community data
   const [loading, setLoading] = useState(true); // Loading state for the community
@@ -49,7 +50,7 @@ export default function Home() {
 
   async function getCurrentUser(uid) {
     try {
-      const response = await fetch(`http://localhost:3001/api/users/${uid}`);
+      const response = await fetch(`${API_URL}/api/users/${uid}`);
       if (!response.ok) {
         throw new Error("Failed to get user");
       }
