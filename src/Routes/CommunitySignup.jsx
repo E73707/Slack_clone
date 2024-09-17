@@ -47,7 +47,7 @@ export default function CommunitySignup() {
         community_owner: user.uid,
       }); // Debugging line
       const response = await fetch(
-        `${process.env.BASE_URL}/api/communities/create`,
+        `/api/communities/create`,
         {
           method: "POST",
           headers: {
