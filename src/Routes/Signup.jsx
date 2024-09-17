@@ -11,6 +11,7 @@ import synkLogo from "../images/SYNK.png";
 import googleLogo from "../images/google-logo.png";
 
 export default function Signup() {
+  const API_URL = "https://slack-clone1-529cef6d905b.herokuapp.com" || 'http://localhost:3001'
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +22,7 @@ export default function Signup() {
   async function sendGoogleDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log
     try {
-      const response = await fetch(`http://localhost:3001/api/users`, {
+      const response = await fetch(`${API_URL}/api/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
