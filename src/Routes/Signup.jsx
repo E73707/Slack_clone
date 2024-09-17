@@ -21,7 +21,7 @@ export default function Signup() {
   async function sendGoogleDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log
     try {
-      const response = await fetch(`/api/users`, {
+      const response = await fetch(`http://localhost:3001/api/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export default function Signup() {
   async function sendDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log
     try {
-      const response = await fetch(`/api/users`, {
+      const response = await fetch(`http://localhost:3001/api/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
