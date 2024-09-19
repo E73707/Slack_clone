@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/Home.css";
 
 export default function Home() {
-   const API_URL = "https://slack-clone1-529cef6d905b.herokuapp.com" || 'http://localhost:3001'
+  const API_URL = "http://localhost:3001";
   const [hasCommunity, setHasCommunity] = useState(false);
   const [communityData, setCommunityData] = useState([]); // State for the community data
   const [loading, setLoading] = useState(true); // Loading state for the community
