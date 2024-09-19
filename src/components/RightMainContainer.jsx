@@ -1,3 +1,9 @@
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import "../css/RightMainContainer.css";
+import MessageInput from "./MessageInput";
+import InviteLinkButton from "./InviteLinkButton";
+
 export default function RightMainContainer() {
   const user = useSelector((state) => state.user.user);
   const channel = useSelector((state) => state.channel.channel);
