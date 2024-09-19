@@ -12,6 +12,7 @@ export default function RightMainContainer() {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      console.log("fetching posts for channelId", channel.id);
       try {
         const response = await fetch(
           `http://localhost:3001/api/posts/${channel.id}`
