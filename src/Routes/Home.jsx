@@ -52,6 +52,9 @@ export default function Home() {
 
   async function getCurrentUser(uid) {
     try {
+      const baseUrl = process.env.REACT_APP_BASE_URL;
+      console.log("baseUrl:", baseUrl);
+
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/api/users/${uid}`
       );
