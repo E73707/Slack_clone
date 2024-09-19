@@ -18,7 +18,7 @@ export default function CommunitySignup() {
   function handleChoiceRoute() {
     navigate("/community-choice");
   }
-
+  console.log(process.env.BASE_URL);
   useEffect(() => {
     console.log("Community data updated:", communityData);
   }, [communityData]);
