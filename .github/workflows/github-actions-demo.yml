@@ -35,6 +35,7 @@ jobs:
       # Build the app (Vite automatically uses .env)
       - name: Build the app
         run: npm run build
+        
 
       # Deploy to Heroku using the Heroku Deploy Action
       - name: Deploy to Heroku
