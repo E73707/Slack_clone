@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../css/RightMainContainer.css";
 import MessageInput from "./MessageInput";
 import InviteLinkButton from "./InviteLinkButton";
+import { setChannel } from "../../features/channelSlice";
 
 export default function RightMainContainer() {
   const user = useSelector((state) => state.user.user);
@@ -15,7 +16,12 @@ export default function RightMainContainer() {
     const fetchPosts = async () => {
       if (!channel || !channel.id) {
         console.error("Invalid channel ID");
-        return;
+        if (!community.channel[0]) {
+          return;
+        }
+        if (community.channel[0]) {
+          useDispatch(setChannel(community.channel[0]));
+        }
       }
 
       console.log("fetching posts for channelId", channel.id);
