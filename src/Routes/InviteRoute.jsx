@@ -40,7 +40,7 @@ export default function InviteRoute() {
     const joinCommunity = async () => {
       try {
         const response = await fetch(
-          `${process.env.BASE_URL}/api/invite/join`,
+          `${process.env.REACT_APP_BASE_URL}/api/invite/join`,
           {
             method: "POST",
             headers: {

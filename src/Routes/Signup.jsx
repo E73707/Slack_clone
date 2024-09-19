@@ -21,17 +21,20 @@ export default function Signup() {
   async function sendGoogleDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log
     try {
-      const response = await fetch(`${process.env.BASE_URL}/api/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to create user");
       }
@@ -46,17 +49,20 @@ export default function Signup() {
   async function sendDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log
     try {
-      const response = await fetch(`${process.env.BASE_URL}/api/users`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          displayName: username,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            email: user.email,
+            displayName: username,
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to create user");
       }

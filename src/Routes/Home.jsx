@@ -52,7 +52,9 @@ export default function Home() {
 
   async function getCurrentUser(uid) {
     try {
-      const response = await fetch(`${process.env.BASE_URL}/api/users/${uid}`);
+      const response = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/users/${uid}`
+      );
       if (!response.ok) {
         throw new Error("Failed to get user");
       }

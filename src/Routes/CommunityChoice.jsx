@@ -17,7 +17,7 @@ export default function CommunityChoice() {
     console.log("Selected community:", communityId);
     try {
       const response = await fetch(
-        `${process.env.BASE_URL}/api/communities/${communityId}`
+        `${process.env.REACT_APP_BASE_URL}/api/communities/${communityId}`
       );
       if (!response.ok) {
         throw new Error("Failed to get community");
