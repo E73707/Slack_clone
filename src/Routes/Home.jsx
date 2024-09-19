@@ -53,7 +53,14 @@ export default function Home() {
 
   async function getCurrentUser(uid) {
     try {
-      const response = await fetch(`${baseUrl}/api/users/${uid}`);
+      const response = await fetch(`${baseUrl}/api/users/${uid}`, {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache", // Disable caching
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to get user");
       }
