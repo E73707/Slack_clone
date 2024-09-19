@@ -26,13 +26,13 @@ export default function Home() {
       getCurrentUser(user.uid);
     }
     if (reduxCommunity && reduxCommunity.id) {
-      console.log("Current community:", reduxCommunity);
       getCurrentCommunity(reduxCommunity.id);
     }
   }, [auth, reduxCommunity]);
 
   async function getCurrentCommunity(communityId) {
     setLoading(true); // Set loading to true when fetching starts
+    console.log("Fetching community:", communityId);
     try {
       const response = await fetch(
         `http://localhost:3001/api/communities/${communityId}`
@@ -41,6 +41,7 @@ export default function Home() {
         throw new Error("Failed to get community");
       }
       const data = await response.json();
+      console.log("Current community:", data);
       dispatch(setCommunityData(data));
     } catch (error) {
       console.error("Error getting community:", error);
