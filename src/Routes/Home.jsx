@@ -26,6 +26,7 @@ export default function Home() {
       getCurrentUser(user.uid);
     }
     if (reduxCommunity && reduxCommunity.id) {
+      console.log("Current community:", reduxCommunity);
       getCurrentCommunity(reduxCommunity.id);
     }
   }, [auth, reduxCommunity]);
