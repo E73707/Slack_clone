@@ -28,7 +28,7 @@ export default function RightMainContainer() {
 
       try {
         const response = await fetch(
-          `http://localhost:3001/api/posts/${channel.id}` // Use environment variable
+          `${process.env.BASE_URL}/api/posts/${channel.id}` // Use environment variable
         );
 
         if (!response.ok) {
@@ -88,7 +88,7 @@ export default function RightMainContainer() {
       const createPost = async () => {
         try {
           const response = await fetch(
-            "http://localhost:3001/api/posts/create",
+            `${process.env.BASE_URL}/api/posts/create`,
             {
               method: "POST",
               headers: {

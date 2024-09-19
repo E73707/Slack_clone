@@ -35,7 +35,7 @@ export default function Home() {
     console.log("Fetching community:", communityId);
     try {
       const response = await fetch(
-        `http://localhost:3001/api/communities/${communityId}`
+        `${process.env.BASE_URL}/api/communities/${communityId}`
       );
       if (!response.ok) {
         throw new Error("Failed to get community");
@@ -52,7 +52,7 @@ export default function Home() {
 
   async function getCurrentUser(uid) {
     try {
-      const response = await fetch(`${API_URL}/api/users/${uid}`);
+      const response = await fetch(`${process.env.BASE_URL}/api/users/${uid}`);
       if (!response.ok) {
         throw new Error("Failed to get user");
       }

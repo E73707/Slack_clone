@@ -18,7 +18,6 @@ export default function CommunitySignup() {
   function handleChoiceRoute() {
     navigate("/community-choice");
   }
-  console.log(process.env.BASE_URL);
   useEffect(() => {
     console.log("Community data updated:", communityData);
   }, [communityData]);
@@ -47,7 +46,7 @@ export default function CommunitySignup() {
         community_owner: user.uid,
       }); // Debugging line
       const response = await fetch(
-        `http://localhost:3001/api/communities/create`,
+        `${process.env.BASE_URL}/api/communities/create`,
         {
           method: "POST",
           headers: {

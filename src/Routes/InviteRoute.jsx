@@ -39,13 +39,16 @@ export default function InviteRoute() {
     // Send the token to the backend for validation
     const joinCommunity = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/invite/join`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token, userId }), // Send userId from state
-        });
+        const response = await fetch(
+          `${process.env.BASE_URL}/api/invite/join`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token, userId }), // Send userId from state
+          }
+        );
 
         const data = await response.json();
 
