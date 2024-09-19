@@ -10,7 +10,10 @@ import { useNavigate } from "react-router-dom";
 import "../css/Home.css";
 
 export default function Home() {
-  const API_URL = "http://localhost:3001";
+  const baseUrl =
+    process.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com";
+
   const [hasCommunity, setHasCommunity] = useState(false);
   const [communityData, setCommunityData] = useState([]); // State for the community data
   const [loading, setLoading] = useState(true); // Loading state for the community
@@ -34,9 +37,7 @@ export default function Home() {
     setLoading(true); // Set loading to true when fetching starts
     console.log("Fetching community:", communityId);
     try {
-      const response = await fetch(
-        `${process.env.BASE_URL}/api/communities/${communityId}`
-      );
+      const response = await fetch(`${baseUrl}/api/communities/${communityId}`);
       if (!response.ok) {
         throw new Error("Failed to get community");
       }
@@ -52,12 +53,7 @@ export default function Home() {
 
   async function getCurrentUser(uid) {
     try {
-      const baseUrl = process.env.REACT_APP_BASE_URL;
-      console.log("baseUrl:", baseUrl);
-
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/users/${uid}`
-      );
+      const response = await fetch(`${baseUrl}/api/users/${uid}`);
       if (!response.ok) {
         throw new Error("Failed to get user");
       }
