@@ -9,26 +9,37 @@ export default function RightMainContainer() {
   const channel = useSelector((state) => state.channel.channel);
   const [webSocket, setWebSocket] = useState(null); // WebSocket state
   const [messages, setMessages] = useState([]);
+  const community = useSelector((state) => state.community.community);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      if (!channel || !channel.id) {
+        console.error("Invalid channel ID");
+        return;
+      }
+
       console.log("fetching posts for channelId", channel.id);
+
       try {
         const response = await fetch(
-          `http://localhost:3001/api/posts/${channel.id}`
-        ); // Hardcoded channelId
+          `http://localhost:3001/api/posts/${channel.id}` // Use environment variable
+        );
+
         if (!response.ok) {
-          throw new Error("Failed to fetch posts"); // Error if the response isn't OK
+          throw new Error("Failed to fetch posts");
         }
+
         const data = await response.json();
-        console.log("Posts fetched:", data); // Log the fetched data
-        setMessages(data);
+        console.log("Posts fetched:", data);
+        setMessages(data); // Set fetched messages
       } catch (error) {
-        console.error("Error fetching posts:", error); // Log any errors
+        console.error("Error fetching posts:", error);
       }
     };
 
-    fetchPosts(); // Call the function to fetch posts
+    if (channel && channel.id) {
+      fetchPosts();
+    }
   }, [channel.id]);
 
   // Initialize WebSocket connection inside useEffect
