@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import "../css/RightMainContainer.css";
-import MessageInput from "./MessageInput";
-import InviteLinkButton from "./InviteLinkButton";
-
 export default function RightMainContainer() {
   const user = useSelector((state) => state.user.user);
-  // const channel = useSelector((state) => state.channel.channel);
+  const channel = useSelector((state) => state.channel.channel);
   const [webSocket, setWebSocket] = useState(null); // WebSocket state
   const [messages, setMessages] = useState([]);
   const community = useSelector((state) => state.community.community);
@@ -40,10 +34,12 @@ export default function RightMainContainer() {
     if (channel && channel.id) {
       fetchPosts();
     }
-  }, [channel.id]);
+  }, [channel]);
 
   // Initialize WebSocket connection inside useEffect
   useEffect(() => {
+    if (!channel || !channel.id) return; // Check if channel is available
+
     const ws = new WebSocket("ws://localhost:3001");
 
     ws.onopen = () => {
@@ -66,7 +62,7 @@ export default function RightMainContainer() {
     return () => {
       if (ws) ws.close();
     };
-  }, [messages]);
+  }, [channel]); // WebSocket should depend on `channel`
 
   const handleSendMessage = (message) => {
     if (webSocket && webSocket.readyState === WebSocket.OPEN) {
@@ -109,12 +105,17 @@ export default function RightMainContainer() {
     }
   };
 
+  // Render only when `channel` exists
+  if (!channel) {
+    return <p>Loading channel...</p>;
+  }
+
   return (
     <div className="right-main-container">
       <div className="right-main-container-content">
         {/* Fixed header */}
         <div className="right-main-container-header">
-          {/* <h4># {channel.channel_name}</h4> */}
+          <h4># {channel.channel_name}</h4>
         </div>
 
         {/* Scrollable posts area */}
