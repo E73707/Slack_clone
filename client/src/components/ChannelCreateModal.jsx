@@ -3,7 +3,7 @@ import exitIcon from "../images/exit.png";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setCommunity } from "../../features/communitySlice";
+import { setCommunity } from "../../../features/communitySlice";
 
 export default function ChannelCreateModal({
   channelModalState,

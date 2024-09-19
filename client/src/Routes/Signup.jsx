@@ -17,24 +17,25 @@ export default function Signup() {
   const [error, setError] = useState(null); // State to store errors
   const auth = getAuth();
   const navigate = useNavigate();
+  // const baseUrl = "http://localhost:3001";
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com";
 
   async function sendGoogleDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/users`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName,
-          }),
-        }
-      );
+      const response = await fetch(`${baseUrl}/api/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+        }),
+      });
       if (!response.ok) {
         throw new Error("Failed to create user");
       }
@@ -49,20 +50,17 @@ export default function Signup() {
   async function sendDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/users`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            uid: user.uid,
-            email: user.email,
-            displayName: username,
-          }),
-        }
-      );
+      const response = await fetch(`${baseUrl}/api/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          displayName: username,
+        }),
+      });
       if (!response.ok) {
         throw new Error("Failed to create user");
       }

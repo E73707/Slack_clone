@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import ChannelCreateModal from "./ChannelCreateModal";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setChannel } from "../../features/channelSlice"; // Import setChannel action
+import { setChannel } from "../../../features/channelSlice"; // Import setChannel action
 
 export default function ChannelList({ communityData }) {
   const dispatch = useDispatch();

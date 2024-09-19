@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "../css/RightMainContainer.css";
 import MessageInput from "./MessageInput";
 import InviteLinkButton from "./InviteLinkButton";
-import { setChannel } from "../../features/channelSlice";
+import { setChannel } from "../../../features/channelSlice";
 
 export default function RightMainContainer() {
   const user = useSelector((state) => state.user.user);

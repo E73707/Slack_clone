@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCommunity } from "../../features/communitySlice";
+import { setCommunity } from "../../../features/communitySlice";
 
 export default function CommunityChoice() {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com";
 
   const communities = user.memberOf.concat(user.ownedCommunities);
 
@@ -16,9 +19,7 @@ export default function CommunityChoice() {
   const handleCommunityClick = async (communityId) => {
     console.log("Selected community:", communityId);
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/communities/${communityId}`
-      );
+      const response = await fetch(`${baseUrl}/api/communities/${communityId}`);
       if (!response.ok) {
         throw new Error("Failed to get community");
       }

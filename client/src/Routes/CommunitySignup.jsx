@@ -7,6 +7,9 @@ export default function CommunitySignup() {
   const auth = getAuth();
   const user = auth.currentUser;
   const reduxUser = useSelector((state) => state.user.user);
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com";
 
   const [communityData, setCommunityData] = useState({
     community_name: "",
@@ -45,16 +48,13 @@ export default function CommunitySignup() {
         ...communityData,
         community_owner: user.uid,
       }); // Debugging line
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/communities/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...communityData, community_owner: userId }),
-        }
-      );
+      const response = await fetch(`${baseUrl}/api/communities/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...communityData, community_owner: userId }),
+      });
       if (!response.ok) {
         throw new Error("Failed to create community");
       }

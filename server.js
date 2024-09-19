@@ -16,6 +16,24 @@ const PORT = process.env.PORT || 3001;
 
 app.use("/api", routes);
 
+// Serve static files from the React app
+import path from "path";
+import { fileURLToPath } from "url";
+
+// These two lines are required to resolve __dirname in ES6 modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// If in production, serve the static files from the React app
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+
+  // Serve the React app for any routes not starting with /api
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 // Sync with the database
 sequelize.sync({ force: false }).then(async () => {
   // Create HTTP server and wrap WebSocket around it

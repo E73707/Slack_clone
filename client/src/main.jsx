@@ -1,4 +1,4 @@
-// src/index.js
+import React from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -7,7 +7,7 @@ import App from "./App.jsx";
 import "./index.css";
 import fbconfig from "./fbconfig.js";
 import { initializeApp } from "firebase/app";
-import { store, persistor } from "../redux/store.js"; // Make sure this path is correct
+import { store, persistor } from "../../redux/store.js"; // Make sure this path is correct
 
 const app = initializeApp(fbconfig);
 

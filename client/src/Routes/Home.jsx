@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
-import { setUser } from "../../features/userSlice";
+import { setUser } from "../../../features/userSlice";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import MainContainer from "../components/MainContainer";
@@ -11,8 +11,10 @@ import "../css/Home.css";
 
 export default function Home() {
   const baseUrl =
-    process.env.REACT_APP_BASE_URL ||
+    import.meta.env.REACT_APP_BASE_URL ||
     "https://slack-clone1-529cef6d905b.herokuapp.com";
+
+  // const baseUrl = "http://localhost:3001";
 
   const [hasCommunity, setHasCommunity] = useState(false);
   const [communityData, setCommunityData] = useState([]); // State for the community data
