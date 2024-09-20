@@ -23,11 +23,9 @@ const PORT = process.env.PORT || 3001;
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
-}
 
-// Wildcard route to serve React app for non-API routes
-if (process.env.NODE_ENV === "production") {
-  app.get(/^\/(?!api).*/, (req, res) => {
+  // Serve React app for any non-API route
+  app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
