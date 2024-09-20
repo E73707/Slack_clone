@@ -25,6 +25,7 @@ User.init(
   {
     sequelize, // Pass the connection instance
     modelName: "User", // Choose the name of the model
+    tableName: "users", // Use the specified
   }
 );
 
