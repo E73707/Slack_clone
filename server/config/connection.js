@@ -1,14 +1,18 @@
 import Sequelize from "sequelize";
-
 import dotenv from "dotenv";
 
+// Load environment variables from .env file in development
 dotenv.config();
 
 let sequelize;
 
-if (process.env.JAWSDB_URL) {
-  sequelize = new Sequelize(process.env.JAWSDB_URL);
+// Check if running in production with CLEARDB_DATABASE_URL (on Heroku)
+if (process.env.CLEARDB_DATABASE_URL) {
+  sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL, {
+    dialect: "mysql",
+  });
 } else {
+  // Fallback for local development environment
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
