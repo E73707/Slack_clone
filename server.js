@@ -22,11 +22,11 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3001;
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
+  app.use(express.static(path.join(__dirname, "dist")));
 
   // Serve React app for any non-API route
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
   });
 }
 
