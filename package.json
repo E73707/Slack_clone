@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "heroku-postbuild": "npm install && npm run build"
+    "heroku-postbuild": "npm install --production=false && npm run build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
