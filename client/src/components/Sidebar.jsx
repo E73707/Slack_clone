@@ -27,7 +27,7 @@ export default function Sidebar({ communityData }) {
     console.log("Getting members for community:", communityData.id);
     try {
       const response = await fetch(
-        `${baseUrl}/api/communitymembers/members/${communityData.id}`
+        `${baseUrl}/api/members/${communityData.id}`
       );
       if (!response.ok) {
         throw new Error("Failed to get members");

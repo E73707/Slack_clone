@@ -6,7 +6,7 @@ import Community from "../../models/Community.js";
 const router = express.Router();
 
 // Route to get members of a specific community
-router.get("/members/:communityId", async (req, res) => {
+router.get("/:communityId", async (req, res) => {
   const { communityId } = req.params;
 
   if (!communityId) {
