@@ -20,7 +20,8 @@ export default function Signup() {
   // const baseUrl = "http://localhost:3001";
   const baseUrl =
     import.meta.env.REACT_APP_BASE_URL ||
-    "https://slack-clone1-529cef6d905b.herokuapp.com";
+    "https://slack-clone1-529cef6d905b.herokuapp.com" ||
+    "http://localhost:3001";
 
   async function sendGoogleDataToBackend(user) {
     console.log("sendDataToBackend called with user:", user); // Add this log

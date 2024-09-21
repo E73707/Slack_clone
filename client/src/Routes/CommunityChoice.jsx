@@ -7,7 +7,8 @@ export default function CommunityChoice() {
   const dispatch = useDispatch();
   const baseUrl =
     import.meta.env.REACT_APP_BASE_URL ||
-    "https://slack-clone1-529cef6d905b.herokuapp.com";
+    "https://slack-clone1-529cef6d905b.herokuapp.com" ||
+    "http://localhost:3001";
 
   const communities = user.memberOf.concat(user.ownedCommunities);
 

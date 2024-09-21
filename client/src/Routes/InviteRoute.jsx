@@ -9,6 +9,10 @@ export default function InviteRoute() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [userId, setUserId] = useState(null);
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com" ||
+    "http://localhost:3001";
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -39,16 +43,13 @@ export default function InviteRoute() {
     // Send the token to the backend for validation
     const joinCommunity = async () => {
       try {
-        const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/api/invite/join`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ token, userId }), // Send userId from state
-          }
-        );
+        const response = await fetch(`${baseUrl}/api/invite/join`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token, userId }), // Send userId from state
+        });
 
         const data = await response.json();
 
