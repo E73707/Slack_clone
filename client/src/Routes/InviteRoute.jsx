@@ -42,6 +42,7 @@ export default function InviteRoute() {
 
     // Send the token to the backend for validation
     const joinCommunity = async () => {
+      console.log("Joining community with token:", token);
       try {
         const response = await fetch(`${baseUrl}/api/invite/join`, {
           method: "POST",
@@ -51,8 +52,11 @@ export default function InviteRoute() {
           body: JSON.stringify({ token, userId }), // Send userId from state
         });
 
+        console.log("Response:", response);
+
         const data = await response.json();
 
+        console.log("Data:", data);
         if (response.ok) {
           setMessage(data.message);
           setLoading(false);
