@@ -56,7 +56,9 @@ export default function RightMainContainer() {
   useEffect(() => {
     if (!channel || !channel.id) return; // Check if channel is available
 
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket(
+      "ws://localhost:3001" || "wss://slack-clone1-529cef6d905b.herokuapp.com"
+    );
 
     ws.onopen = () => {
       setWebSocket(ws); // Set WebSocket connection to state
