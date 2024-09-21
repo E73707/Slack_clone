@@ -9,12 +9,33 @@ import { signOut } from "firebase/auth";
 import "../css/Sidebar.css";
 
 export default function Sidebar({ communityData }) {
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com" ||
+    "http://localhost:3001";
+
   async function handleSignout() {
     try {
       await signOut(auth);
       console.log("User signed out successfully");
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function getAllMembers() {
+    console.log("Getting members for community:", communityData.id);
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/communitymembers/members/${communityData.id}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to get members");
+      }
+      const data = await response.json();
+      console.log("Members data:", data);
+    } catch (error) {
+      console.error("Error getting members:", error);
     }
   }
 
@@ -50,7 +71,7 @@ export default function Sidebar({ communityData }) {
           <p className="sidebar-menu-icon-text">Activity</p>
         </div>
 
-        <div className="sidebar-menu sidebar-menu-more">
+        <div onClick={getAllMembers} className="sidebar-menu sidebar-menu-more">
           <div className="sidebar-menu-icon-wrapper">
             <img className="sidebar-icon" src={moreIcon}></img>
           </div>

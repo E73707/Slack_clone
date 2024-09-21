@@ -6,15 +6,22 @@ import ChannelCreateModal from "./ChannelCreateModal";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setChannel } from "../../../features/channelSlice"; // Import setChannel action
+import { auth } from "firebaseui";
 
 export default function ChannelList({ communityData }) {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(true);
   const [channelList, setChannelList] = useState([]);
   const [channelModal, setChanelModal] = useState(true);
+  const user = useSelector((state) => state.user.user);
+  const community = useSelector((state) => state.community.community);
+  const [authLevel, setAuthLevel] = useState(false);
 
   useEffect(() => {
     setChannelList(communityData.channels);
+    if (communityData.community_owner === user.uid) {
+      setAuthLevel(true);
+    }
   }, [communityData]);
 
   const handleChannelModal = () => {
@@ -69,9 +76,11 @@ export default function ChannelList({ communityData }) {
       <div className="channel-list">
         <div className="channel">
           <div className="channel-name-wrapper">
-            <p onClick={handleChannelModal} className="channel-name">
-              Create Channel
-            </p>
+            {authLevel && (
+              <p onClick={handleChannelModal} className="channel-name">
+                Create Channel
+              </p>
+            )}
           </div>
         </div>
       </div>

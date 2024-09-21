@@ -4,6 +4,7 @@ import communityRoutes from "./api/communityRoutes.js";
 import channelRoutes from "./api/channelRoutes.js";
 import postRoutes from "./api/postRoutes.js";
 import inviteRoutes from "./api/invite.js";
+import memberRoutes from "./api/communityMemberRoutes.js";
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use("/users", userRoutes);
 router.use("/channels", channelRoutes);
 router.use("/posts", postRoutes);
 router.use("/invite", inviteRoutes);
+router.use("/members", memberRoutes);
 
 export default router;
