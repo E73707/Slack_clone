@@ -16,6 +16,10 @@ export default function ChannelCreateModal({
   const communityData = useSelector((state) => state.community.community);
   const [newCommunityData, setNewCommunityData] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com" ||
+    "http://localhost:3001";
 
   useEffect(() => {
     if (communityData.community_owner === user.uid) {
@@ -36,16 +40,13 @@ export default function ChannelCreateModal({
   const createChannel = async () => {
     console.log("Creating channel with data:", channelData);
     try {
-      const response = await fetch(
-        "http://localhost:3001/api/channels/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(channelData), // Only send channelData, no event
-        }
-      );
+      const response = await fetch(`${baseUrl}/api/channels/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(channelData), // Only send channelData, no event
+      });
       if (response.ok) {
         const data = await response.json();
         console.log("Channel created successfully:", data);
@@ -62,7 +63,7 @@ export default function ChannelCreateModal({
   const getChannelData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/communities/${communityData.id}`
+        `${baseUrl}/api/communities/${communityData.id}`
       );
       if (!response.ok) {
         throw new Error("Failed to get community");

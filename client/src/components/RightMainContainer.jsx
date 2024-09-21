@@ -11,6 +11,10 @@ export default function RightMainContainer() {
   const [webSocket, setWebSocket] = useState(null); // WebSocket state
   const [messages, setMessages] = useState([]);
   const community = useSelector((state) => state.community.community);
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com" ||
+    "http://localhost:3001";
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -28,7 +32,7 @@ export default function RightMainContainer() {
 
       try {
         const response = await fetch(
-          `${process.env.BASE_URL}/api/posts/${channel.id}` // Use environment variable
+          `${baseUrl}/api/posts/${channel.id}` // Use environment variable
         );
 
         if (!response.ok) {
@@ -87,16 +91,13 @@ export default function RightMainContainer() {
 
       const createPost = async () => {
         try {
-          const response = await fetch(
-            `${process.env.BASE_URL}/api/posts/create`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(messageData),
-            }
-          );
+          const response = await fetch(`${baseUrl}/api/posts/create`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(messageData),
+          });
           if (!response.ok) {
             throw new Error("Failed to create post");
           }
