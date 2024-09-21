@@ -2,7 +2,6 @@ import express from "express";
 import crypto from "crypto";
 import InviteToken from "../../models/InviteToken.js";
 import Community from "../../models/Community.js";
-import { useSelector } from "react-redux";
 import CommunityMember from "../../models/CommunityMember.js";
 
 const router = express.Router();

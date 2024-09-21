@@ -51,7 +51,7 @@ ChannelMember.belongsTo(CommunityChannel, {
 // Sync all models with the database
 (async () => {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
     console.log("Database synced and tables created");
   } catch (error) {
     console.error("Error syncing database:", error);

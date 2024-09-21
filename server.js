@@ -56,7 +56,7 @@ app.post("/api/posts/create", async (req, res) => {
 });
 
 // Sync with the database and start the server
-await sequelize.sync({ force: true }).then(() => {
+await sequelize.sync({ force: false }).then(() => {
   const server = app.listen(PORT, () =>
     console.log(`Now listening on port ${PORT}`)
   );
