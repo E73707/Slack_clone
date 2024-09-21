@@ -20,10 +20,12 @@ router.get("/members/:communityId", async (req, res) => {
         {
           model: User,
           as: "user",
+          attributes: ["uid", "email"], // Select specific fields
         },
         {
           model: Community,
           as: "community",
+          attributes: ["id", "community_name"], // Select specific fields
         },
       ],
     });

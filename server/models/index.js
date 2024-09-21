@@ -48,6 +48,11 @@ ChannelMember.belongsTo(CommunityChannel, {
   as: "channel_members",
 });
 
+Community.hasMany(CommunityMember, { foreignKey: "communityId" });
+CommunityMember.belongsTo(Community, { foreignKey: "communityId" });
+User.hasMany(CommunityMember, { foreignKey: "userId" });
+CommunityMember.belongsTo(User, { foreignKey: "userId" });
+
 // Sync all models with the database
 (async () => {
   try {
