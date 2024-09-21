@@ -10,7 +10,7 @@ export default function InviteRoute() {
   const [message, setMessage] = useState("");
   const [userId, setUserId] = useState(null);
   const baseUrl =
-    import.meta.env.REACT_APP_BASE_URL ||
+    process.env.BASE_URL ||
     "https://slack-clone1-529cef6d905b.herokuapp.com" ||
     "http://localhost:3001";
 

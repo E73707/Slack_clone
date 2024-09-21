@@ -6,6 +6,10 @@ import { useSelector } from "react-redux";
 import CommunityMember from "../../models/CommunityMember.js";
 
 const router = express.Router();
+const baseUrl =
+  process.env.BASE_URL ||
+  "http://localhost:3001" ||
+  "https://slack-clone1-529cef6d905b.herokuapp.com";
 
 router.post("/generate", async (req, res) => {
   const { communityId, userId } = req.body;
@@ -32,7 +36,7 @@ router.post("/generate", async (req, res) => {
     });
 
     // Construct the invite link
-    const inviteLink = `${process.env.BASE_URL}/invite/${inviteToken}`;
+    const inviteLink = `${baseUrl}/invite/${inviteToken}`;
 
     res.json({ inviteLink });
   } catch (error) {
@@ -43,6 +47,10 @@ router.post("/generate", async (req, res) => {
 
 router.post("/join", async (req, res) => {
   const { token, userId } = req.body;
+
+  if (!token || !userId) {
+    return res.status(400).json({ error: "Invalid input data" });
+  }
 
   try {
     // Find the invite by token
