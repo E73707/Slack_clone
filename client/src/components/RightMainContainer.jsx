@@ -16,6 +16,11 @@ export default function RightMainContainer() {
     "https://slack-clone1-529cef6d905b.herokuapp.com" ||
     "http://localhost:3001";
 
+  const socketUrl =
+    process.env.NODE_ENV === "production"
+      ? `wss://${window.location.hostname}:${window.location.port}`
+      : "ws://localhost:3001";
+
   useEffect(() => {
     const fetchPosts = async () => {
       if (!channel || !channel.id) {
@@ -56,9 +61,7 @@ export default function RightMainContainer() {
   useEffect(() => {
     if (!channel || !channel.id) return; // Check if channel is available
 
-    const ws = new WebSocket(
-      "ws://localhost:3001" || "wss://slack-clone1-529cef6d905b.herokuapp.com"
-    );
+    const ws = new WebSocket(socketUrl);
 
     ws.onopen = () => {
       setWebSocket(ws); // Set WebSocket connection to state
