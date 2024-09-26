@@ -5,10 +5,14 @@ import activityIcon from "../images/activity-icon.png";
 import moreIcon from "../images/more-icon.png";
 import plusIcon from "../images/plus-icon.png";
 import { signOut } from "firebase/auth";
+import Popover from "./Popover";
 
 import "../css/Sidebar.css";
 
 export default function Sidebar({ communityData }) {
+  const [isPopoverVisible, setIsPopoverVisible] = React.useState(false);
+  const [members, setMembers] = React.useState([]);
+  const [loadingMembers, setLoadingMembers] = React.useState(false);
   const baseUrl =
     import.meta.env.REACT_APP_BASE_URL ||
     "https://slack-clone1-529cef6d905b.herokuapp.com" ||
@@ -24,7 +28,7 @@ export default function Sidebar({ communityData }) {
   }
 
   async function getAllMembers() {
-    console.log("Getting members for community:", communityData.id);
+    setLoadingMembers(true);
     try {
       const response = await fetch(
         `${baseUrl}/api/members/${communityData.id}`
@@ -34,10 +38,19 @@ export default function Sidebar({ communityData }) {
       }
       const data = await response.json();
       console.log("Members data:", data);
+      setMembers(data);
     } catch (error) {
       console.error("Error getting members:", error);
+    } finally {
+      setLoadingMembers(false);
     }
   }
+  const handleMoreClick = () => {
+    if (!isPopoverVisible) {
+      getAllMembers();
+    }
+    setIsPopoverVisible(!isPopoverVisible);
+  };
 
   return (
     <div className="sidebar">
@@ -71,13 +84,24 @@ export default function Sidebar({ communityData }) {
           <p className="sidebar-menu-icon-text">Activity</p>
         </div>
 
-        <div onClick={getAllMembers} className="sidebar-menu sidebar-menu-more">
+        <div
+          onClick={handleMoreClick}
+          className="sidebar-menu sidebar-menu-more"
+        >
           <div className="sidebar-menu-icon-wrapper">
-            <img className="sidebar-icon" src={moreIcon}></img>
+            <img className="sidebar-icon" src={moreIcon} alt="More"></img>
           </div>
           <p className="sidebar-menu-icon-text">More</p>
         </div>
+
+        {/* Popover component */}
+        <Popover
+          members={members}
+          isVisible={isPopoverVisible}
+          position="right"
+        />
       </div>
+
       <div className="sidebar-bottom">
         <div className="sidebar-menu sidebar-menu-help">
           <div className="sidebar-menu-icon-wrapper">

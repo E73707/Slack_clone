@@ -7,12 +7,14 @@ import { PersistGate } from "redux-persist/integration/react";
 import userReducer from "../features/userSlice"; // Replace with your actual user slice
 import communityReducer from "../features/communitySlice";
 import channelReducer from "../features/channelSlice";
+import memberReducer from "../features/memberSlice";
 
 // Combine all reducers
 const rootReducer = combineReducers({
   user: userReducer,
   community: communityReducer,
   channel: channelReducer,
+  member: memberReducer,
   // Add more reducers here if you have them
 });
 

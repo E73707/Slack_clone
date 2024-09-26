@@ -15,16 +15,16 @@ export default function Home() {
     "https://slack-clone1-529cef6d905b.herokuapp.com" ||
     "http://localhost:3001";
 
-  // const baseUrl = "http://localhost:3001";
-
   const [hasCommunity, setHasCommunity] = useState(false);
   const [communityData, setCommunityData] = useState([]); // State for the community data
   const [loading, setLoading] = useState(true); // Loading state for the community
+  const [members, setMembers] = useState([]);
   const dispatch = useDispatch();
   const auth = getAuth();
   const navigate = useNavigate();
   const reduxUser = useSelector((state) => state.user.user);
   const reduxCommunity = useSelector((state) => state.community.community);
+  const membersList = useSelector((state) => state.member.members);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -34,7 +34,8 @@ export default function Home() {
     if (reduxCommunity && reduxCommunity.id) {
       getCurrentCommunity(reduxCommunity.id);
     }
-  }, [auth, reduxCommunity]);
+    getAllMembers(reduxCommunity.id);
+  }, [auth, reduxCommunity, membersList]);
 
   async function getCurrentCommunity(communityId) {
     setLoading(true); // Set loading to true when fetching starts
@@ -83,6 +84,24 @@ export default function Home() {
       }
     } catch (error) {
       console.error("Error getting user:", error);
+    }
+  }
+
+  async function getAllMembers() {
+    try {
+      const response = await fetch(
+        `${baseUrl}/api/members/${reduxCommunity.id}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to get members");
+      }
+      const data = await response.json();
+      console.log("Members data:", data);
+      setMembers(data);
+    } catch (error) {
+      console.error("Error getting members:", error);
+    } finally {
+      setLoadingMembers(false);
     }
   }
 
