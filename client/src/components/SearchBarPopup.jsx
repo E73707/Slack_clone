@@ -3,6 +3,7 @@ import "../css/SearchBarPopup.css"; // Create this CSS for styling
 import blackHashtagIcon from "../images/black-hashtag.png";
 import avatarPlaceholder from "../images/avatar-placeholder.jpg";
 import searchIcon from "../images/search.png";
+import { on } from "ws";
 
 export default function SearchBarPopup({
   onBlur,
@@ -19,11 +20,11 @@ export default function SearchBarPopup({
 
   useEffect(() => {
     if (inputValue.trim() !== "") {
-      // Exact match for users
-      const matchedUsers = allUsers.filter((user) =>
-        user.email.toLowerCase().startsWith(inputValue.toLowerCase())
+      const matchedUsers = allUsers.filter((userObj) =>
+        userObj.User.displayName
+          .toLowerCase()
+          .startsWith(inputValue.toLowerCase())
       );
-
       // Exact match for channels
       const matchedChannels = allChannels.filter((channel) =>
         channel.name.toLowerCase().startsWith(inputValue.toLowerCase())
@@ -35,7 +36,7 @@ export default function SearchBarPopup({
       setUserRecommendations([]);
       setChannelRecommendations([]);
     }
-  }, [inputValue, allUsers, allChannels]);
+  }, [inputValue, allUsers, allChannels, onBlur]);
 
   return (
     <div className="search-bar-popup" tabIndex={0} onBlur={onBlur}>
@@ -86,15 +87,15 @@ export default function SearchBarPopup({
       {/* Display user recommendations */}
       {userRecommendations.length > 0 && (
         <div className="recommendation-section">
-          {userRecommendations.map((user) => (
-            <div key={user.id} className="search-recommendation">
+          {userRecommendations.map((userObj) => (
+            <div key={userObj.User.id} className="search-recommendation">
               <div className="search-recommendation-text">
                 <img
                   className="search-recommendation-icon"
                   src={avatarPlaceholder}
                   alt="Avatar"
                 />
-                {user.email}
+                {userObj.User.displayName}
               </div>
             </div>
           ))}

@@ -24,7 +24,7 @@ export default function Home() {
   const navigate = useNavigate();
   const reduxUser = useSelector((state) => state.user.user);
   const reduxCommunity = useSelector((state) => state.community.community);
-  const membersList = useSelector((state) => state.member.members);
+  const membersList = useSelector((state) => state.members.members);
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -34,7 +34,6 @@ export default function Home() {
     if (reduxCommunity && reduxCommunity.id) {
       getCurrentCommunity(reduxCommunity.id);
     }
-    getAllMembers(reduxCommunity.id);
   }, [auth, reduxCommunity, membersList]);
 
   async function getCurrentCommunity(communityId) {
@@ -46,7 +45,6 @@ export default function Home() {
         throw new Error("Failed to get community");
       }
       const data = await response.json();
-      console.log("Current community:", data);
       dispatch(setCommunityData(data));
     } catch (error) {
       console.error("Error getting community:", error);
@@ -84,24 +82,6 @@ export default function Home() {
       }
     } catch (error) {
       console.error("Error getting user:", error);
-    }
-  }
-
-  async function getAllMembers() {
-    try {
-      const response = await fetch(
-        `${baseUrl}/api/members/${reduxCommunity.id}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to get members");
-      }
-      const data = await response.json();
-      console.log("Members data:", data);
-      setMembers(data);
-    } catch (error) {
-      console.error("Error getting members:", error);
-    } finally {
-      setLoadingMembers(false);
     }
   }
 

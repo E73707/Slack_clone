@@ -8,13 +8,15 @@ import userReducer from "../features/userSlice"; // Replace with your actual use
 import communityReducer from "../features/communitySlice";
 import channelReducer from "../features/channelSlice";
 import memberReducer from "../features/memberSlice";
+import allUserReducer from "../features/allUserSlice";
 
 // Combine all reducers
 const rootReducer = combineReducers({
   user: userReducer,
   community: communityReducer,
   channel: channelReducer,
-  member: memberReducer,
+  members: memberReducer,
+  allUser: allUserReducer,
   // Add more reducers here if you have them
 });
 

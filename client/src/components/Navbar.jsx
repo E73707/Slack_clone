@@ -4,6 +4,8 @@ import backArrow from "../images/back-icon.png";
 import forwardArrow from "../images/forward-icon.png";
 import historyIcon from "../images/history-icon.png";
 import SearchBarPopup from "./SearchBarPopup";
+import { useSelector } from "react-redux";
+
 const allUsers = [
   { id: 1, email: "Alice" },
   { id: 2, email: "Bob" },
@@ -16,18 +18,42 @@ const allChannels = [
   { id: 3, name: "projects" },
 ];
 export default function Navbar() {
+  const baseUrl =
+    import.meta.env.REACT_APP_BASE_URL ||
+    "https://slack-clone1-529cef6d905b.herokuapp.com" ||
+    "http://localhost:3001";
+  const [allUsers, setAllUsers] = useState([]);
+  const community = useSelector((state) => state.community.community);
+  const users = useSelector((state) => state.members.members);
+  console.log("users", users);
   const currentChannel = { id: 1, name: "intros" };
 
-  const [isPopupVisible, setIsPopupVisible] = useState(true);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const handleFocus = () => {
-    setIsPopupVisible(true);
+    setIsPopupVisible(!isPopupVisible);
+
+    fetchMembers();
   };
 
   const handleBlur = () => {
     setTimeout(() => {
-      setIsPopupVisible(true);
+      setIsPopupVisible(!isPopupVisible);
     }, 200);
+  };
+
+  const fetchMembers = async () => {
+    try {
+      const response = await fetch(`${baseUrl}/api/members/${community.id}`);
+      if (!response.ok) {
+        throw new Error("Failed to get members");
+      }
+      const data = await response.json();
+      console.log("Members data:", data);
+      setAllUsers(data);
+    } catch (error) {
+      console.error("Error getting members:", error);
+    }
   };
 
   return (
