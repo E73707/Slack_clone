@@ -4,8 +4,20 @@ import backArrow from "../images/back-icon.png";
 import forwardArrow from "../images/forward-icon.png";
 import historyIcon from "../images/history-icon.png";
 import SearchBarPopup from "./SearchBarPopup";
+const allUsers = [
+  { id: 1, email: "Alice" },
+  { id: 2, email: "Bob" },
+  { id: 3, email: "Charlie" },
+];
 
+const allChannels = [
+  { id: 1, name: "intros" },
+  { id: 2, name: "random" },
+  { id: 3, name: "projects" },
+];
 export default function Navbar() {
+  const currentChannel = { id: 1, name: "intros" };
+
   const [isPopupVisible, setIsPopupVisible] = useState(true);
 
   const handleFocus = () => {
@@ -35,7 +47,14 @@ export default function Navbar() {
             readOnly
           />
         </div>
-        {isPopupVisible && <SearchBarPopup onBlur={handleBlur} />}
+        {isPopupVisible && (
+          <SearchBarPopup
+            currentChannel={currentChannel}
+            allUsers={allUsers}
+            allChannels={allChannels}
+            onBlur={handleBlur}
+          />
+        )}
       </nav>
       <nav className="navbar-right">
         <img className="nav-icon" src={forwardArrow} alt="Forward Arrow" />
