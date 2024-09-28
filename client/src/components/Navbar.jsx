@@ -18,6 +18,7 @@ const allChannels = [
   { id: 3, name: "projects" },
 ];
 export default function Navbar() {
+  const channel = useSelector((state) => state.channel.channel);
   const baseUrl =
     import.meta.env.REACT_APP_BASE_URL ||
     "https://slack-clone1-529cef6d905b.herokuapp.com" ||
@@ -25,14 +26,15 @@ export default function Navbar() {
   const [allUsers, setAllUsers] = useState([]);
   const community = useSelector((state) => state.community.community);
   const users = useSelector((state) => state.members.members);
-  console.log("users", users);
-  const currentChannel = { id: 1, name: "intros" };
+  const currentChannel = { id: channel.id, name: channel.channel_name };
+  const allMessages = useSelector(
+    (state) => state.channelMessages.channelMessages
+  );
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const handleFocus = () => {
     setIsPopupVisible(!isPopupVisible);
-
     fetchMembers();
   };
 
@@ -78,6 +80,7 @@ export default function Navbar() {
             currentChannel={currentChannel}
             allUsers={allUsers}
             allChannels={allChannels}
+            allMessages={allMessages}
             onBlur={handleBlur}
           />
         )}

@@ -10,14 +10,12 @@ export default function SearchBarPopup({
   currentChannel,
   allUsers,
   allChannels,
+  allMessages,
 }) {
   const [inputValue, setInputValue] = useState("");
   const [userRecommendations, setUserRecommendations] = useState([]);
   const [channelRecommendations, setChannelRecommendations] = useState([]);
-
-  console.log("allUsers:", allUsers);
-  console.log("allChannels:", allChannels);
-
+  const [messageRecommendations, setMessageRecommendations] = useState([]);
   useEffect(() => {
     if (inputValue.trim() !== "") {
       const matchedUsers = allUsers.filter((userObj) =>
@@ -25,11 +23,14 @@ export default function SearchBarPopup({
           .toLowerCase()
           .startsWith(inputValue.toLowerCase())
       );
-      // Exact match for channels
       const matchedChannels = allChannels.filter((channel) =>
         channel.name.toLowerCase().startsWith(inputValue.toLowerCase())
       );
 
+      const matchedMessages = allMessages.filter((message) =>
+        message.content.toLowerCase().includes(inputValue.toLowerCase())
+      );
+      setMessageRecommendations(matchedMessages);
       setUserRecommendations(matchedUsers);
       setChannelRecommendations(matchedChannels);
     } else {
@@ -119,6 +120,43 @@ export default function SearchBarPopup({
           ))}
         </div>
       )}
+
+      {(inputValue && messageRecommendations.length > 0) ||
+      (inputValue && userRecommendations.length < 0) ? (
+        <div className="messages-separator">
+          <p className="messages-separator-text">
+            Recent messages in #{currentChannel.name}
+          </p>
+        </div>
+      ) : null}
+
+      {/* Display message recommendations */}
+      {inputValue &&
+        messageRecommendations.length > 0 &&
+        userRecommendations.length < 1 && (
+          <div className="recommendation-section">
+            {messageRecommendations.map((message) => (
+              <div key={message.id} className="search-recommendation">
+                <div className="search-recommendation-text">
+                  <img
+                    className="search-recommendation-icon"
+                    src={avatarPlaceholder}
+                    alt="Avatar"
+                  />
+                  <div className="message-recommendation-text">
+                    <div
+                      className="search-recommendation-messages"
+                      dangerouslySetInnerHTML={{ __html: message.content }}
+                    />
+                    <div className="search-recommendation-message-name">
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
     </div>
   );
 }

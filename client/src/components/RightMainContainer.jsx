@@ -4,8 +4,13 @@ import "../css/RightMainContainer.css";
 import MessageInput from "./MessageInput";
 import InviteLinkButton from "./InviteLinkButton";
 import { setChannel } from "../../../features/channelSlice";
+import { setChannelMessages } from "../../../features/channelMessages";
 
 export default function RightMainContainer() {
+  const dispatch = useDispatch();
+  const channelMessages = useSelector(
+    (state) => state.channelMessages.channelMessages
+  );
   const user = useSelector((state) => state.user.user);
   const channel = useSelector((state) => state.channel.channel);
   const [webSocket, setWebSocket] = useState(null); // WebSocket state
@@ -47,6 +52,7 @@ export default function RightMainContainer() {
         const data = await response.json();
         console.log("Posts fetched:", data);
         setMessages(data); // Set fetched messages
+        // useDispatch(setChannelMessages(data));
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -131,12 +137,9 @@ export default function RightMainContainer() {
   return (
     <div className="right-main-container">
       <div className="right-main-container-content">
-        {/* Fixed header */}
         <div className="right-main-container-header">
           <h4># {channel.channel_name}</h4>
         </div>
-
-        {/* Scrollable posts area */}
         <div className="right-main-container-posts">
           {messages.length > 0 ? (
             messages.map((msg, index) => (

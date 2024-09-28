@@ -9,6 +9,7 @@ import communityReducer from "../features/communitySlice";
 import channelReducer from "../features/channelSlice";
 import memberReducer from "../features/memberSlice";
 import allUserReducer from "../features/allUserSlice";
+import channelMessages from "../features/channelMessages";
 
 // Combine all reducers
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   channel: channelReducer,
   members: memberReducer,
   allUser: allUserReducer,
+  channelMessages: channelMessages,
   // Add more reducers here if you have them
 });
 

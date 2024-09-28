@@ -3,6 +3,8 @@ import express from "express";
 import Post from "../../models/CommunityPost.js";
 import Community from "../../models/Community.js";
 import CommunityChannel from "../../models/CommunityChannel.js";
+import User from "../../models/User.js";
+// import { displayName } from "react-quill";
 
 const router = express.Router();
 
@@ -44,8 +46,17 @@ router.get("/:channelId", async (req, res) => {
   try {
     const posts = await Post.findAll({
       where: { channelId },
+      include: [
+        {
+          model: User,
+          attributes: ["displayName", "email"],
+        },
+      ],
       order: [["createdAt", "ASC"]],
+      logging: console.log,
     });
+
+    console.log("Posts found", posts);
 
     if (posts.length === 0) {
       console.log(`No posts found for channelId: ${channelId}`);
@@ -55,7 +66,7 @@ router.get("/:channelId", async (req, res) => {
 
     res.json(posts);
   } catch (error) {
-    console.error("Error getting posts: ", error);
+    console.error("Error getting posts: ", error.message, error.stack);
     res.status(500).json({ error: "Failed to get posts" });
   }
 });

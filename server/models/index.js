@@ -31,7 +31,7 @@ Community.hasMany(CommunityChannel, {
 CommunityChannel.belongsTo(Community, { foreignKey: "communityId" });
 Community.hasMany(CommunityPost, { foreignKey: "communityId" });
 CommunityPost.belongsTo(Community, { foreignKey: "communityId" });
-User.hasMany(CommunityPost, { foreignKey: "userId" });
+User.hasMany(CommunityPost, { foreignKey: "userId", as: "Posts" });
 CommunityPost.belongsTo(User, { foreignKey: "userId" });
 CommunityChannel.hasMany(CommunityPost, { foreignKey: "channelId" });
 CommunityPost.belongsTo(CommunityChannel, { foreignKey: "channelId" });
