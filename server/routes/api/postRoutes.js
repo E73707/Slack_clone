@@ -49,6 +49,7 @@ router.get("/:channelId", async (req, res) => {
       include: [
         {
           model: User,
+          as: "User",
           attributes: ["displayName", "email"],
         },
       ],
