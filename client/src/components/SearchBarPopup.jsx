@@ -33,6 +33,7 @@ export default function SearchBarPopup({
       setMessageRecommendations(matchedMessages);
       setUserRecommendations(matchedUsers);
       setChannelRecommendations(matchedChannels);
+      console.log(messageRecommendations);
     } else {
       setUserRecommendations([]);
       setChannelRecommendations([]);
@@ -148,9 +149,7 @@ export default function SearchBarPopup({
                       className="search-recommendation-messages"
                       dangerouslySetInnerHTML={{ __html: message.content }}
                     />
-                    <div className="search-recommendation-message-name">
-                      
-                    </div>
+                    <div className="search-recommendation-message-name">{}</div>
                   </div>
                 </div>
               </div>

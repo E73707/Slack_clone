@@ -6,12 +6,6 @@ import historyIcon from "../images/history-icon.png";
 import SearchBarPopup from "./SearchBarPopup";
 import { useSelector } from "react-redux";
 
-const allUsers = [
-  { id: 1, email: "Alice" },
-  { id: 2, email: "Bob" },
-  { id: 3, email: "Charlie" },
-];
-
 const allChannels = [
   { id: 1, name: "intros" },
   { id: 2, name: "random" },

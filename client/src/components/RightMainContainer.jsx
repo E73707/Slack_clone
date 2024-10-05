@@ -98,6 +98,7 @@ export default function RightMainContainer() {
         userId: user.uid,
         channelId: channel.id,
         content: message,
+        username: user.displayName,
       };
 
       const createPost = async () => {
