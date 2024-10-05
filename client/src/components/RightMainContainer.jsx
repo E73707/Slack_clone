@@ -34,16 +34,14 @@ export default function RightMainContainer() {
           return;
         }
         if (community.channel[0]) {
-          useDispatch(setChannel(community.channel[0]));
+          dispatch(setChannel(community.channel[0])); // Use dispatch correctly
         }
       }
 
       console.log("fetching posts for channelId", channel.id);
 
       try {
-        const response = await fetch(
-          `${baseUrl}/api/posts/${channel.id}` // Use environment variable
-        );
+        const response = await fetch(`${baseUrl}/api/posts/${channel.id}`); // Use environment variable
 
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
@@ -52,17 +50,18 @@ export default function RightMainContainer() {
         const data = await response.json();
         console.log("Posts fetched:", data);
         setMessages(data); // Set fetched messages
-        // useDispatch(setChannelMessages(data));
+
+        // Correct dispatch usage here
+        dispatch(setChannelMessages(data)); // Dispatching the messages correctly
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
 
     if (channel && channel.id) {
-      fetchPosts();
+      fetchPosts(); // Calling the function inside useEffect
     }
-  }, [channel]);
-
+  }, [channel, dispatch]); // Don't forget to add `dispatch` to the dependencies
   // Initialize WebSocket connection inside useEffect
   useEffect(() => {
     if (!channel || !channel.id) return; // Check if channel is available
