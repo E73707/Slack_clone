@@ -145,11 +145,13 @@ export default function SearchBarPopup({
                     alt="Avatar"
                   />
                   <div className="message-recommendation-text">
+                    <div className="search-recommendation-message-name">
+                      {message.User.displayName}
+                    </div>
                     <div
                       className="search-recommendation-messages"
                       dangerouslySetInnerHTML={{ __html: message.content }}
                     />
-                    <div className="search-recommendation-message-name">{}</div>
                   </div>
                 </div>
               </div>
