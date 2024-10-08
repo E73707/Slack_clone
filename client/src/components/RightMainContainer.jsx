@@ -39,7 +39,7 @@ export default function RightMainContainer() {
       }
 
       console.log("fetching posts for channelId", channel.id);
-
+      console.log(user);
       try {
         const response = await fetch(`${baseUrl}/api/posts/${channel.id}`); // Use environment variable
 
@@ -50,7 +50,7 @@ export default function RightMainContainer() {
         const data = await response.json();
         console.log("Posts fetched:", data);
         setMessages(data); // Set fetched messages
-
+        console.log("Messages:", messages); // Log messages
         // Correct dispatch usage here
         dispatch(setChannelMessages(data)); // Dispatching the messages correctly
       } catch (error) {
@@ -76,6 +76,7 @@ export default function RightMainContainer() {
       try {
         const newMessage = JSON.parse(event.data);
         setMessages((prevMessages) => [...prevMessages, newMessage]);
+        console.log("New message:", newMessage);
       } catch (error) {
         console.error("Error parsing message:", error);
       }
@@ -143,9 +144,13 @@ export default function RightMainContainer() {
         <div className="right-main-container-posts">
           {messages.length > 0 ? (
             messages.map((msg, index) => (
-              <p key={index}>
-                <strong>{msg.userId}:</strong> {msg.content}
-              </p>
+              <div className="message-container" key={index}>
+                <strong>{msg.User?.displayName || msg.username}</strong>{" "}
+                <div
+                  className="message-content"
+                  dangerouslySetInnerHTML={{ __html: msg.content }}
+                />
+              </div>
             ))
           ) : (
             <p>No messages yet.</p>

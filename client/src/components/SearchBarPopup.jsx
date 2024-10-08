@@ -136,26 +136,30 @@ export default function SearchBarPopup({
         messageRecommendations.length > 0 &&
         userRecommendations.length < 1 && (
           <div className="recommendation-section">
-            {messageRecommendations.map((message) => (
-              <div key={message.id} className="search-recommendation">
-                <div className="search-recommendation-text">
-                  <img
-                    className="search-recommendation-icon"
-                    src={avatarPlaceholder}
-                    alt="Avatar"
-                  />
-                  <div className="message-recommendation-text">
-                    <div className="search-recommendation-message-name">
-                      {message.User.displayName}
-                    </div>
-                    <div
-                      className="search-recommendation-messages"
-                      dangerouslySetInnerHTML={{ __html: message.content }}
+            {messageRecommendations.slice(0, 5).map(
+              (
+                message // Limit to 5 items
+              ) => (
+                <div key={message.id} className="search-recommendation">
+                  <div className="search-recommendation-text">
+                    <img
+                      className="search-recommendation-icon"
+                      src={avatarPlaceholder}
+                      alt="Avatar"
                     />
+                    <div className="message-recommendation-text-2">
+                      <div className="search-recommendation-message-name">
+                        {message.User.displayName}
+                      </div>
+                      <div
+                        className="search-recommendation-messages"
+                        dangerouslySetInnerHTML={{ __html: message.content }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         )}
     </div>

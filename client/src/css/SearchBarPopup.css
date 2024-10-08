@@ -42,7 +42,6 @@
   display: flex;
   width: 100%;
   display: flex;
-  flex-direction: column;
 }
 
 .recommendation-section {
@@ -56,17 +55,15 @@
   border-radius: 4px;
 }
 .search-recommendation-messages {
-  /* display: flex;
-  flex-direction: column;
-  padding: 0;
-  cursor: pointer;
-  margin: 0;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px; */
   font-size: 10px;
   color: #333;
   word-wrap: break-word;
+  padding: 0;
+  margin: 0;
+}
+.search-recommendation-messages p {
+  padding: 0;
+  margin: 0;
 }
 .messages-separator-text {
   font-size: 12px;
@@ -81,6 +78,8 @@
   font-size: 12px;
   font-weight: bold;
   color: #333;
+  padding: 0;
+  margin: 0;
 }
 
 .message-recommendation-text {
@@ -88,4 +87,18 @@
   color: #333;
   padding-left: 10px;
   align-items: left;
+}
+
+.search-recommendation-text-2 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  padding-left: 10px;
+  display: flex;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  padding: 0;
+  margin: 0;
 }

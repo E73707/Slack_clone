@@ -21,6 +21,15 @@
   z-index: 10;
 }
 
+.message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
 .right-main-container-posts {
   flex-grow: 1;
   overflow-y: auto; /* Make posts area scrollable */
@@ -32,4 +41,8 @@
   padding: 1rem;
   border-top: 1px solid #ddd;
   position: sticky;
+}
+
+.message-content {
+  font-size: 14px;
 }
