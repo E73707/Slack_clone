@@ -5,17 +5,22 @@ import MessageInput from "./MessageInput";
 import InviteLinkButton from "./InviteLinkButton";
 import { setChannel } from "../../../features/channelSlice";
 import { setChannelMessages } from "../../../features/channelMessages";
+import avatarPlaceholder from "../images/avatar-placeholder.jpg";
+import TimestampHover from "./TimestampHover";
 
 export default function RightMainContainer() {
   const dispatch = useDispatch();
   const channelMessages = useSelector(
     (state) => state.channelMessages.channelMessages
   );
+  const [showDate, setShowDate] = useState(false);
   const user = useSelector((state) => state.user.user);
   const channel = useSelector((state) => state.channel.channel);
   const [webSocket, setWebSocket] = useState(null); // WebSocket state
   const [messages, setMessages] = useState([]);
   const community = useSelector((state) => state.community.community);
+  const [hoveredMessageId, setHoveredMessageId] = useState(null); // Track which message is hovered
+
   const baseUrl =
     import.meta.env.REACT_APP_BASE_URL ||
     "https://slack-clone1-529cef6d905b.herokuapp.com" ||
@@ -135,6 +140,14 @@ export default function RightMainContainer() {
     return <p>Loading channel...</p>;
   }
 
+  const handleMouseEnter = (id) => {
+    setHoveredMessageId(id); // Set the ID of the hovered message
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredMessageId(null); // Clear the hover state when the mouse leaves
+  };
+
   return (
     <div className="right-main-container">
       <div className="right-main-container-content">
@@ -144,12 +157,43 @@ export default function RightMainContainer() {
         <div className="right-main-container-posts">
           {messages.length > 0 ? (
             messages.map((msg, index) => (
-              <div className="message-container" key={index}>
-                <strong>{msg.User?.displayName || msg.username}</strong>{" "}
+              <div className="message-container">
+                <div className="message-divider">
+                  <img
+                    src={msg.User?.photoURL || avatarPlaceholder}
+                    alt="Avatar"
+                    className="avatar"
+                  />
+                  <strong className="username">
+                    {msg.User?.displayName || msg.username}
+                  </strong>{" "}
+                  <div
+                    className="message-timestamp"
+                    key={index}
+                    onMouseEnter={() => handleMouseEnter(msg.id)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    {new Date(msg.createdAt).toLocaleString("en-US", {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    })}
+                    {/* Show the date popup only for the hovered message */}
+                    {hoveredMessageId === msg.id && (
+                      <TimestampHover
+                        timestamp={new Date(msg.createdAt).toLocaleString()}
+                        onBlur={handleMouseLeave}
+                      />
+                    )}
+                  </div>
+                </div>
                 <div
                   className="message-content"
                   dangerouslySetInnerHTML={{ __html: msg.content }}
                 />
+                <div className="post-divider">
+                  <div className="post-divider-line"></div>
+                </div>
               </div>
             ))
           ) : (
